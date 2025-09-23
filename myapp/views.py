@@ -3,10 +3,12 @@ from django.shortcuts import render
 import json
 from django.contrib.auth import login, authenticate
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from .models import Recipe;
 
-# Create your views here.
+
 def home(request):
     return JsonResponse({'message': 'Hello, world!'})
+
 
 @csrf_exempt
 def login_user(request):
@@ -22,3 +24,16 @@ def login_user(request):
         login(request, user)
         data = {"username": username, "status": "Authenticated"}
     return JsonResponse(data)
+
+
+def get_recipes(request, category="all"):
+    if (category == "all"):
+        recipes = Recipe.objects.all().values("id", "name", "category", "ingredients", "description")
+    else:
+        recipes = Recipe.objects.filter(category=category).values("id", "name", "category", "ingredients", "description")
+    return JsonResponse({'recipes': list(recipes)}, safe=False)
+
+
+def get_recipe(request, id):
+    recipe = Recipe.objects.filter(id=id).values("id", "name", "category", "ingredients", "description").first()
+    return JsonResponse(recipe, safe=False)
