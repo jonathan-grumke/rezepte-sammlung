@@ -23,4 +23,5 @@ urlpatterns = [
     path('myapp/', include('myapp.urls')),
     path('', TemplateView.as_view(template_name='home.html')),
     path('login/', TemplateView.as_view(template_name='index.html')),
+    path('rezepte/', TemplateView.as_view(template_name='index.html')),
 ]

@@ -1,28 +1,96 @@
 // import { useState, useEffect } from 'react';
 import "./Rezepte.css";
 import "../assets/styles.css";
+import { useState, useEffect } from "react";
 
 export default function Rezepte() {
 
     // let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
 
+    const [recipes, setRecipes] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    // window.location.origin + 
+
+    const recipes_url = "/myapp/recipes";
+
+    const recipes_url_category = (category) => {
+        return `${recipes_url}/${category}`;
+    }
+
+    const get_recipes = async () => {
+        const res = await fetch(recipes_url, {
+            method: "GET",
+        });
+        const json = await res.json();
+        const recipes = json.recipes;
+        let categories = [];
+        recipes.forEach((recipe) => {
+            categories.push(recipe.category);
+        });
+        categories = [...new Set(categories)];
+        setRecipes(recipes);
+        console.log(recipes);
+        console.log(categories);
+        console.log("Hallo");
+        setCategories(categories);
+    }
+
+    const filter_by_category = async (category) => {
+        let url;
+        if (category === "all") {
+            url = recipes_url;
+        }
+        else {
+            url = recipes_url_category(category);
+        }
+        const res = await fetch(url, {
+            method: "GET",
+        });
+        const json = await res.json();
+        setRecipes(json.recipes);
+    }
+
+    const category_name_map = new Map([
+        ["main", "Hauptgerichte"],
+        ["dessert", "Desserts"],
+        ["snack", "Snacks"],
+        ["drink", "Getränke"],
+        ["soup", "Suppen"],
+        ["salad", "Salate"]
+    ]);
+
+    useEffect(() => {
+        get_recipes();
+    }, []);
+
     return (
         <>
             <title>Rezepte</title>
+            <label for="category">Kategorie</label>
+            <select name="category" id="category" onChange={(e) => filter_by_category(e.target.value)}>
+                <option value="all" selected>Alle</option>
+                {categories.map((category) => (
+                    <option value={category}>{category_name_map.get(category)}</option>
+                ))}
+            </select>
             <div>
                 <h1>Rezepte</h1>
-                <h2>Hauptgerichte</h2>
-                <ul>
+                {categories.map((category) => (
+                    recipes.filter(recipe => recipe.category === category).length > 0 && (
+                        <div key={category}>
+                            <h2>{category_name_map.get(category)}</h2>
+                            <ul>
+                                {recipes.filter(recipe => recipe.category === category).map((recipe) => (
+                                    <li key={recipe.id}>
+                                        {recipe.name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )
 
-                </ul>
-                <h2>Desserts</h2>
-                <ul>
-
-                </ul>
-                <h2>Snacks</h2>
-                <ul>
-
-                </ul>
+                ))}
             </div>
         </>
     )
