@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import "./Rezepte.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
@@ -9,8 +8,6 @@ export default function Rezepte() {
 
     const [recipes, setRecipes] = useState([]);
     const [categories, setCategories] = useState([]);
-
-    // window.location.origin + 
 
     const recipes_url = "/myapp/recipes";
 
@@ -30,9 +27,6 @@ export default function Rezepte() {
         });
         categories = [...new Set(categories)];
         setRecipes(recipes);
-        console.log(recipes);
-        console.log(categories);
-        console.log("Hallo");
         setCategories(categories);
     }
 
@@ -83,7 +77,7 @@ export default function Rezepte() {
                             <ul>
                                 {recipes.filter(recipe => recipe.category === category).map((recipe) => (
                                     <li key={recipe.id}>
-                                        {recipe.name}
+                                        <a href={"/rezept/" + recipe.id}>{recipe.name}</a>
                                     </li>
                                 ))}
                             </ul>
