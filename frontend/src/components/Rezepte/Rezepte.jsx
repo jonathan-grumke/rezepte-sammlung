@@ -1,6 +1,7 @@
 import "./Rezepte.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
+import Header from "../Header/Header";
 
 export default function Rezepte() {
 
@@ -58,8 +59,11 @@ export default function Rezepte() {
         get_recipes();
     }, []);
 
+    const isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
+
     return (
         <>
+            <Header />
             <title>Rezepte</title>
             <label for="category">Kategorie</label>
             <select name="category" id="category" onChange={(e) => filter_by_category(e.target.value)}>
@@ -83,9 +87,11 @@ export default function Rezepte() {
                             </ul>
                         </div>
                     )
-
                 ))}
             </div>
+            {isLoggedIn &&
+                <a href="/neues-rezept">Neues Rezept erstellen</a>
+            }
         </>
     )
 

@@ -1,6 +1,7 @@
 import "./Rezepte.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
+import Header from "../Header/Header";
 
 export default function Rezept() {
     const [recipe, setRecipe] = useState({});
@@ -26,6 +27,7 @@ export default function Rezept() {
 
     return (
         <>
+            <Header />
             <title>{recipe.name}</title>
             <div className="rezept-container">
                 {recipe ? (

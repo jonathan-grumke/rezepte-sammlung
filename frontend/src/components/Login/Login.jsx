@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import "./Login.css";
 import "../assets/styles.css";
+import Header from "../Header/Header";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -26,6 +27,7 @@ export default function Login() {
         const json = await res.json();
         if (json.status != null && json.status === "Authenticated") {
             sessionStorage.setItem('username', json.username);
+            window.location.href = "/";
         }
         else {
             alert("User konnte nicht authentifiziert werden.");
@@ -34,6 +36,7 @@ export default function Login() {
 
     return (
         <>
+            <Header />
             <title>Login</title>
             <div className="login-container">
                 <div className="">
