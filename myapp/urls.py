@@ -9,5 +9,9 @@ urlpatterns = [
     
     path(route='recipe/<int:id>', view=views.get_recipe, name='get_recipe'),
     
+    path(route='recipe/create', view=views.create_recipe, name='create_recipe'),
+    # path(route='recipe/<int:id>/update', view=views.update_recipe, name='update_recipe'),
+    # path(route='recipe/<int:id>/delete', view=views.delete_recipe, name='delete_recipe'),
+    
     # path(route='', view=views.home, name='home'),
 ]

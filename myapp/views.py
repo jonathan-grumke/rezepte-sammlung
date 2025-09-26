@@ -37,3 +37,16 @@ def get_recipes(request, category="all"):
 def get_recipe(request, id):
     recipe = Recipe.objects.filter(id=id).values("id", "name", "category", "ingredients", "description").first()
     return JsonResponse(recipe, safe=False)
+
+
+@csrf_exempt
+def create_recipe(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        name = data.get("name")
+        category = data.get("category")
+        ingredients = data.get("ingredients")
+        description = data.get("description")
+        recipe = Recipe.objects.create(name=name, category=category, ingredients=ingredients, description=description)
+        return JsonResponse({"message": "Recipe created successfully", "id": recipe.id}, status=201)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
