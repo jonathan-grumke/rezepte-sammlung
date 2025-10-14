@@ -50,3 +50,32 @@ def create_recipe(request):
         recipe = Recipe.objects.create(name=name, category=category, ingredients=ingredients, description=description)
         return JsonResponse({"message": "Recipe created successfully", "id": recipe.id}, status=201)
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+@csrf_exempt
+def delete_recipe(request, id):
+    if request.method == "DELETE":
+        try:
+            recipe = Recipe.objects.get(id=id)
+            recipe.delete()
+            return JsonResponse({"message": "Recipe deleted successfully"}, status=200)
+        except Recipe.DoesNotExist:
+            return JsonResponse({"error": "Recipe not found"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+@csrf_exempt
+def update_recipe(request, id):
+    if request.method == "PUT":
+        try:
+            data = json.loads(request.body)
+            recipe = Recipe.objects.get(id=id)
+            recipe.name = data.get("name", recipe.name)
+            recipe.category = data.get("category", recipe.category)
+            recipe.ingredients = data.get("ingredients", recipe.ingredients)
+            recipe.description = data.get("description", recipe.description)
+            recipe.save()
+            return JsonResponse({"message": "Recipe updated successfully"}, status=200)
+        except Recipe.DoesNotExist:
+            return JsonResponse({"error": "Recipe not found"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)

@@ -21,9 +21,28 @@ export default function Rezept() {
         setIngredients(json.ingredients);
     }
 
+    const delete_recipe = async (id) => {
+        if (window.confirm("Möchten Sie dieses Rezept wirklich löschen?")) {
+            const res = await fetch(`/myapp/recipe/${id}/delete`, {
+                method: "DELETE",
+            });
+            if (res.ok) {
+                alert("Rezept erfolgreich gelöscht.");
+                window.location.href = "/rezepte";
+            } else {
+                alert("Fehler beim Löschen des Rezepts.");
+            }
+        }
+        else {
+            return;
+        }
+    }
+
     useEffect(() => {
         get_recipe(recipe_id);
     }, [recipe_id]);
+
+    let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
 
     return (
         <>
@@ -48,6 +67,12 @@ export default function Rezept() {
                         ))}
                         <h2>Zubereitung</h2>
                         <p>{recipe.description}</p>
+                        {isLoggedIn &&
+                            <>
+                                <button onClick={() => delete_recipe(recipe.id)} className="delete-button">Rezept löschen</button>
+                                <a href={"/rezept/" + recipe.id + "/bearbeiten"} className="edit-button">Rezept bearbeiten</a>
+                            </>
+                        }
                     </div>
                 ) : (<p>Lade Rezept...</p>)
                 }

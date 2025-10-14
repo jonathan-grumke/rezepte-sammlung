@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 
 export default function Rezepte() {
-
-    // let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
-
     const [recipes, setRecipes] = useState([]);
     const [categories, setCategories] = useState([]);
 
