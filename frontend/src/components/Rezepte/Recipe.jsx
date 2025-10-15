@@ -1,9 +1,9 @@
-import "./Rezepte.css";
+import "./Recipe.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 
-export default function Rezept() {
+export default function Recipe() {
     const [recipe, setRecipe] = useState({});
     const [ingredients, setIngredients] = useState([]);
 

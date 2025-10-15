@@ -1,17 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
-import Rezepte from "./components/Rezepte/Rezepte";
-import Rezept from "./components/Rezepte/Rezept";
-import CreateRezept from "./components/Rezepte/CreateRezept";
+import Recipes from "./components/Rezepte/Recipes";
+import Recipe from "./components/Rezepte/Recipe";
+import CreateRecipe from "./components/Rezepte/CreateRecipe";
 import EditRecipe from "./components/Rezepte/EditRecipe";
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/rezepte" element={<Rezepte />} />
-      <Route path="/rezept/:id" element={<Rezept />} />
-      <Route path="/neues-rezept" element={<CreateRezept />} />
+      <Route path="/rezepte" element={<Recipes />} />
+      <Route path="/rezept/:id" element={<Recipe />} />
+      <Route path="/neues-rezept" element={<CreateRecipe />} />
       <Route path="/rezept/:id/bearbeiten" element={<EditRecipe />} />
     </Routes>
   );

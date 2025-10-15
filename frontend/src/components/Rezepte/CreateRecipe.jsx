@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
 
-export default function CreateRezept() {
+export default function CreateRecipe() {
     const handleCreate = async ({ name, category, description, ingredients }) => {
 
         let data = {
