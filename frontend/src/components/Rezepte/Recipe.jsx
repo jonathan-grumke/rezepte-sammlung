@@ -66,7 +66,8 @@ export default function Recipe() {
                             </tr>
                         ))}
                         <h2>Zubereitung</h2>
-                        <p>{recipe.description}</p>
+                        <div dangerouslySetInnerHTML={{ __html: recipe.description }} >
+                        </div>
                         {isLoggedIn &&
                             <>
                                 <button onClick={() => delete_recipe(recipe.id)} className="delete-button">Rezept löschen</button>

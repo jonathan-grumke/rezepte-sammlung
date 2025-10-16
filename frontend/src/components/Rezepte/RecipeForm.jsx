@@ -1,6 +1,15 @@
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import IngredientList from "../Ingredients/IngredientList";
+import Editor, {
+    BtnBold,
+    BtnBulletList,
+    BtnItalic,
+    BtnLink,
+    BtnNumberedList,
+    BtnUnderline,
+    Toolbar,
+} from 'react-simple-wysiwyg';
 
 export default function RezeptForm({ initialData = {}, onSubmit }) {
     const [name, setName] = useState(initialData.name || "");
@@ -25,37 +34,46 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
         <>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
+                    <label>Titel:
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                            name="title"
+                        />
+                    </label>
                 </div>
                 <div>
-                    <label>Kategorie:</label>
-                    <select
-                        onChange={(e) => setCategory(e.target.value)}
-                        required
-                        value={category}
-                    >
-                        <option value="">Wähle eine Kategorie</option>
-                        <option value="main">Hauptgericht</option>
-                        <option value="dessert">Dessert</option>
-                        <option value="snack">Snack</option>
-                        <option value="drink">Getränk</option>
-                        <option value="soup">Suppe</option>
-                        <option value="salad">Salat</option>
-                    </select>
+                    <label>Kategorie:
+                        <select
+                            onChange={(e) => setCategory(e.target.value)}
+                            required
+                            value={category}
+                            name="category"
+                        >
+                            <option value="">Wähle eine Kategorie</option>
+                            <option value="main">Hauptgericht</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="snack">Snack</option>
+                            <option value="drink">Getränk</option>
+                            <option value="soup">Suppe</option>
+                            <option value="salad">Salat</option>
+                        </select>
+                    </label>
                 </div>
                 <div>
-                    <label>Beschreibung:</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
+                    <label>Anweisungen:</label>
+                    <Editor value={description} onChange={(e) => setDescription(e.target.value)}>
+                        <Toolbar>
+                            <BtnBold />
+                            <BtnItalic />
+                            <BtnUnderline />
+                            <BtnBulletList />
+                            <BtnNumberedList />
+                            <BtnLink />
+                        </ Toolbar>
+                    </Editor>
                 </div>
                 <div>
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
