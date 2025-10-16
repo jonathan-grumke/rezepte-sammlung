@@ -78,7 +78,7 @@ export default function Recipes() {
                             <ul>
                                 {recipes.filter(recipe => recipe.category === category).map((recipe) => (
                                     <li key={recipe.id}>
-                                        <a href={"/rezept/" + recipe.id}>{recipe.name}</a>
+                                        <a href={"/rezept/" + recipe.id}>{recipe.title}</a>
                                     </li>
                                 ))}
                             </ul>

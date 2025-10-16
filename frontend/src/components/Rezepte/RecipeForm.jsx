@@ -12,9 +12,9 @@ import Editor, {
 } from 'react-simple-wysiwyg';
 
 export default function RezeptForm({ initialData = {}, onSubmit }) {
-    const [name, setName] = useState(initialData.name || "");
+    const [title, setTitle] = useState(initialData.title || "");
     const [category, setCategory] = useState(initialData.category || "");
-    const [description, setDescription] = useState(initialData.description || "");
+    const [instructions, setInstructions] = useState(initialData.instructions || "");
     const [ingredients, setIngredients] = useState(initialData.ingredients || []);
 
     const handleSubmit = (e) => {
@@ -23,11 +23,11 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
             alert("Bitte alle Felder ausfüllen und mindestens eine Zutat hinzufügen.");
             return;
         }
-        onSubmit({ name, category, description, ingredients });
+        onSubmit({ title, category, instructions, ingredients });
     };
 
     const validateForm = () => {
-        return name.trim() !== "" && category.trim() !== "" && description.trim() !== "" && ingredients.length > 0;
+        return title.trim() !== "" && category.trim() !== "" && instructions.trim() !== "" && ingredients.length > 0;
     }
 
     return (
@@ -37,8 +37,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                     <label>Titel:
                         <input
                             type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             required
                             name="title"
                         />
@@ -64,7 +64,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                 </div>
                 <div>
                     <label>Anweisungen:</label>
-                    <Editor value={description} onChange={(e) => setDescription(e.target.value)}>
+                    <Editor value={instructions} onChange={(e) => setInstructions(e.target.value)}>
                         <Toolbar>
                             <BtnBold />
                             <BtnItalic />

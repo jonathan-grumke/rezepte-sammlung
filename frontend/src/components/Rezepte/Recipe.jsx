@@ -47,11 +47,11 @@ export default function Recipe() {
     return (
         <>
             <Header />
-            <title>{recipe.name}</title>
+            <title>{recipe.title}</title>
             <div className="rezept-container">
                 {recipe ? (
                     <div>
-                        <h1>{recipe.name}</h1>
+                        <h1>{recipe.title}</h1>
                         <h2>Zutaten</h2>
                         <table>
                             <tr>
@@ -62,11 +62,11 @@ export default function Recipe() {
                         {ingredients.map((ingredient) => (
                             <tr>
                                 <td>{ingredient.amount} {ingredient.unit}</td>
-                                <td>{ingredient.name}</td>
+                                <td>{ingredient.title}</td>
                             </tr>
                         ))}
                         <h2>Zubereitung</h2>
-                        <div dangerouslySetInnerHTML={{ __html: recipe.description }} >
+                        <div dangerouslySetInnerHTML={{ __html: recipe.instructions }} >
                         </div>
                         {isLoggedIn &&
                             <>

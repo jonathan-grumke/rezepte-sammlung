@@ -28,14 +28,14 @@ def login_user(request):
 
 def get_recipes(request, category="all"):
     if (category == "all"):
-        recipes = Recipe.objects.all().values("id", "name", "category", "ingredients", "description")
+        recipes = Recipe.objects.all().values("id", "title", "category", "ingredients", "instructions")
     else:
-        recipes = Recipe.objects.filter(category=category).values("id", "name", "category", "ingredients", "description")
+        recipes = Recipe.objects.filter(category=category).values("id", "title", "category", "ingredients", "instructions")
     return JsonResponse({'recipes': list(recipes)}, safe=False)
 
 
 def get_recipe(request, id):
-    recipe = Recipe.objects.filter(id=id).values("id", "name", "category", "ingredients", "description").first()
+    recipe = Recipe.objects.filter(id=id).values("id", "title", "category", "ingredients", "instructions").first()
     return JsonResponse(recipe, safe=False)
 
 
@@ -43,11 +43,11 @@ def get_recipe(request, id):
 def create_recipe(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        name = data.get("name")
+        title = data.get("title")
         category = data.get("category")
         ingredients = data.get("ingredients")
-        description = data.get("description")
-        recipe = Recipe.objects.create(name=name, category=category, ingredients=ingredients, description=description)
+        instructions = data.get("instructions")
+        recipe = Recipe.objects.create(title=title, category=category, ingredients=ingredients, instructions=instructions)
         return JsonResponse({"message": "Recipe created successfully", "id": recipe.id}, status=201)
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
@@ -70,10 +70,10 @@ def update_recipe(request, id):
         try:
             data = json.loads(request.body)
             recipe = Recipe.objects.get(id=id)
-            recipe.name = data.get("name", recipe.name)
+            recipe.title = data.get("title", recipe.title)
             recipe.category = data.get("category", recipe.category)
             recipe.ingredients = data.get("ingredients", recipe.ingredients)
-            recipe.description = data.get("description", recipe.description)
+            recipe.instructions = data.get("instructions", recipe.instructions)
             recipe.save()
             return JsonResponse({"message": "Recipe updated successfully"}, status=200)
         except Recipe.DoesNotExist:

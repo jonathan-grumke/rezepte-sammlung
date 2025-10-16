@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
     
     CATEGORY_CHOICES = [
         ('main', 'Hauptgericht'),
@@ -15,7 +15,7 @@ class Recipe(models.Model):
     
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='main')
     ingredients = models.JSONField()
-    description = models.TextField()
+    instructions = models.TextField()
     
     def __str__(self):
-        return self.name
+        return self.title

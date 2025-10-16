@@ -4,12 +4,12 @@ import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
 
 export default function CreateRecipe() {
-    const handleCreate = async ({ name, category, description, ingredients }) => {
+    const handleCreate = async ({ title, category, instructions, ingredients }) => {
 
         let data = {
-            "name": name,
+            "title": title,
             "category": category,
-            "description": description,
+            "instructions": instructions,
             "ingredients": ingredients
         };
         try {
