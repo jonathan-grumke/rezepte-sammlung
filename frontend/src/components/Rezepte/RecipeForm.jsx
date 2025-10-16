@@ -30,6 +30,20 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
         return title.trim() !== "" && category.trim() !== "" && instructions.trim() !== "" && ingredients.length > 0;
     }
 
+    const handleCancel = () => {
+        if (window.confirm("Möchtest du wirklich abbrechen? Alle Änderungen gehen verloren.")) {
+            if (window.location.pathname.includes("/bearbeiten")) {
+                window.location.href = `/rezept/${initialData.id}`;
+            }
+            else {
+                window.location.href = "/rezepte";
+            }
+        }
+        else {
+            return;
+        }
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -79,7 +93,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
                 </div>
                 <button type="submit">Rezept speichern</button>
-                <button type="button" onClick={() => window.location.href = "/rezepte"}>Abbrechen</button>
+                <button type="button" onClick={handleCancel}>Abbrechen</button>
             </form>
         </>
     )
