@@ -4,13 +4,14 @@ import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
 
 export default function CreateRecipe() {
-    const handleCreate = async ({ title, category, instructions, ingredients }) => {
+    const handleCreate = async ({ title, category, instructions, ingredients, servings }) => {
 
         let data = {
             "title": title,
             "category": category,
             "instructions": instructions,
-            "ingredients": ingredients
+            "ingredients": ingredients,
+            "servings": servings
         };
         try {
             const res = await fetch("/myapp/recipe/create", {

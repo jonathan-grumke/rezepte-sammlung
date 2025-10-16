@@ -28,14 +28,14 @@ def login_user(request):
 
 def get_recipes(request, category="all"):
     if (category == "all"):
-        recipes = Recipe.objects.all().values("id", "title", "category", "ingredients", "instructions")
+        recipes = Recipe.objects.all().values("id", "title", "category", "ingredients", "instructions", "servings")
     else:
-        recipes = Recipe.objects.filter(category=category).values("id", "title", "category", "ingredients", "instructions")
+        recipes = Recipe.objects.filter(category=category).values("id", "title", "category", "ingredients", "instructions", "servings")
     return JsonResponse({'recipes': list(recipes)}, safe=False)
 
 
 def get_recipe(request, id):
-    recipe = Recipe.objects.filter(id=id).values("id", "title", "category", "ingredients", "instructions").first()
+    recipe = Recipe.objects.filter(id=id).values("id", "title", "category", "ingredients", "instructions", "servings").first()
     return JsonResponse(recipe, safe=False)
 
 
@@ -47,7 +47,8 @@ def create_recipe(request):
         category = data.get("category")
         ingredients = data.get("ingredients")
         instructions = data.get("instructions")
-        recipe = Recipe.objects.create(title=title, category=category, ingredients=ingredients, instructions=instructions)
+        servings = data.get("servings", 2)
+        recipe = Recipe.objects.create(title=title, category=category, ingredients=ingredients, instructions=instructions, servings=servings)
         return JsonResponse({"message": "Recipe created successfully", "id": recipe.id}, status=201)
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
@@ -74,6 +75,7 @@ def update_recipe(request, id):
             recipe.category = data.get("category", recipe.category)
             recipe.ingredients = data.get("ingredients", recipe.ingredients)
             recipe.instructions = data.get("instructions", recipe.instructions)
+            recipe.servings = data.get("servings", recipe.servings)
             recipe.save()
             return JsonResponse({"message": "Recipe updated successfully"}, status=200)
         except Recipe.DoesNotExist:

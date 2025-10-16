@@ -16,6 +16,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
     const [category, setCategory] = useState(initialData.category || "");
     const [instructions, setInstructions] = useState(initialData.instructions || "");
     const [ingredients, setIngredients] = useState(initialData.ingredients || []);
+    const [servings, setServings] = useState(initialData.servings || 2);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,11 +24,11 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
             alert("Bitte alle Felder ausfüllen und mindestens eine Zutat hinzufügen.");
             return;
         }
-        onSubmit({ title, category, instructions, ingredients });
+        onSubmit({ title, category, instructions, ingredients, servings });
     };
 
     const validateForm = () => {
-        return title.trim() !== "" && category.trim() !== "" && instructions.trim() !== "" && ingredients.length > 0;
+        return title.trim() !== "" && category.trim() !== "" && instructions.trim() !== "" && ingredients.length > 0 && servings > 0;
     }
 
     const handleCancel = () => {
@@ -90,11 +91,28 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                     </Editor>
                 </div>
                 <div>
+                    <label>Portionen:
+                        <input
+                            type="number"
+                            name="servings"
+                            list="servings-options" min="1" max="20" step="1"
+                            value={servings}
+                            onChange={(e) => setServings(e.target.value)}
+                            style={{ width: "60px" }}
+                        />
+                        <datalist id="servings-options">
+                            <option value="1" />
+                            <option value="2" />
+                            <option value="4" />
+                        </datalist>
+                    </label>
+                </div>
+                <div>
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
                 </div>
                 <button type="submit">Rezept speichern</button>
                 <button type="button" onClick={handleCancel}>Abbrechen</button>
-            </form>
+            </form >
         </>
     )
 }

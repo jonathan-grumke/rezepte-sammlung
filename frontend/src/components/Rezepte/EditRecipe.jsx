@@ -28,12 +28,13 @@ export default function EditRecipe() {
         }
     };
 
-    const handleUpdate = async ({ title, category, instructions, ingredients }) => {
+    const handleUpdate = async ({ title, category, instructions, ingredients, servings }) => {
         let data = {
             "title": title,
             "category": category,
             "instructions": instructions,
-            "ingredients": ingredients
+            "ingredients": ingredients,
+            "servings": servings
         }
         try {
             const res = await fetch(`/myapp/recipe/${recipe_id}/update`, {

@@ -19,6 +19,7 @@ export default function Recipe() {
         const json = await res.json();
         setRecipe(json);
         setIngredients(json.ingredients);
+        console.log("Fetched recipe:", json);
     }
 
     const delete_recipe = async (id) => {
@@ -53,6 +54,7 @@ export default function Recipe() {
                     <div>
                         <h1>{recipe.title}</h1>
                         <h2>Zutaten</h2>
+                        <p>Portionen: {recipe.servings}</p>
                         <table>
                             <tr>
                                 <th>Menge</th>
@@ -62,7 +64,7 @@ export default function Recipe() {
                         {ingredients.map((ingredient) => (
                             <tr>
                                 <td>{ingredient.amount} {ingredient.unit}</td>
-                                <td>{ingredient.title}</td>
+                                <td>{ingredient.name}</td>
                             </tr>
                         ))}
                         <h2>Zubereitung</h2>

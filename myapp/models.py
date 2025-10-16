@@ -16,6 +16,7 @@ class Recipe(models.Model):
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='main')
     ingredients = models.JSONField()
     instructions = models.TextField()
+    servings = models.IntegerField(default=2)
     
     def __str__(self):
         return self.title
