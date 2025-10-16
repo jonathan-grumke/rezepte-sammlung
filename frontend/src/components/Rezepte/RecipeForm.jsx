@@ -78,7 +78,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                 <div>
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
                 </div>
-                <button type="submit">Rezept erstellen</button>
+                <button type="submit">Rezept speichern</button>
+                <button type="button" onClick={() => window.location.href = "/rezepte"}>Abbrechen</button>
             </form>
         </>
     )
