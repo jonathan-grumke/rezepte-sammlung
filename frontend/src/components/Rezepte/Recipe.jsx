@@ -61,7 +61,7 @@ export default function Recipe() {
                         </table>
                         {ingredients.map((ingredient) => (
                             <tr>
-                                <td>{ingredient.amount}</td>
+                                <td>{ingredient.amount} {ingredient.unit}</td>
                                 <td>{ingredient.name}</td>
                             </tr>
                         ))}

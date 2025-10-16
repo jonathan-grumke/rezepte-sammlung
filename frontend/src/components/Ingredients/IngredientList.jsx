@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 export default function IngredientList({ ingredients, setIngredients }) {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState('');
+    const [unit, setUnit] = useState('');
     const [editIndex, setEditIndex] = useState(null);
 
     const handleAddIngredient = () => {
@@ -10,21 +11,23 @@ export default function IngredientList({ ingredients, setIngredients }) {
 
         if (editIndex !== null) {
             const updated = [...ingredients];
-            updated[editIndex] = { name, amount };
+            updated[editIndex] = { name, amount, unit };
             setIngredients(updated);
             setEditIndex(null);
         } else {
-            setIngredients([...ingredients, { name, amount }]);
+            setIngredients([...ingredients, { name, amount, unit }]);
         }
 
         setName('');
         setAmount('');
+        setUnit('');
     };
 
     const handleEdit = (index) => {
         setEditIndex(index);
         setName(ingredients[index].name);
         setAmount(ingredients[index].amount);
+        setUnit(ingredients[index].unit);
     };
 
     const handleDelete = (index) => {
@@ -43,10 +46,18 @@ export default function IngredientList({ ingredients, setIngredients }) {
                     className=""
                 />
                 <input
-                    type="text"
+                    type="number"
+                    min={0}
                     placeholder="Menge"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
+                    className=""
+                />
+                <input
+                    type="text"
+                    placeholder="Einheit"
+                    value={unit}
+                    onChange={(e) => setUnit(e.target.value)}
                     className=""
                 />
                 <button type='button' onClick={handleAddIngredient}>
@@ -59,7 +70,7 @@ export default function IngredientList({ ingredients, setIngredients }) {
                     <div key={index} className="">
                         <div className="">
                             <div>
-                                <span className="">{ingredient.name}</span> – {ingredient.amount}
+                                <span className="">{ingredient.name}</span> – {ingredient.amount} {ingredient.unit}
                             </div>
                             <div className="">
                                 <button type='button' onClick={() => handleEdit(index)}>
