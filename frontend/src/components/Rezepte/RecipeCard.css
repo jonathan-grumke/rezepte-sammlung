@@ -1,0 +1,34 @@
+.recipe-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    max-width: 350px;
+    overflow: hidden;
+}
+
+.recipe-card-body {
+    padding: 20px;
+}
+
+.recipe-card-hero {
+    width:100%;
+    height:200px;
+    display:block;
+    object-fit:cover;
+    object-position:center;
+    background:#eee;
+}
+
+.recipe-card-title {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: 100;
+    margin: 0;
+}
+
+.recipe-card-cta {
+    display: flex;
+    justify-content: flex-end;
+}

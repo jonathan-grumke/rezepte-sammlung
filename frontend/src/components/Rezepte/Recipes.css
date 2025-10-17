@@ -1,0 +1,17 @@
+.recipe-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.recipe-list li {
+    width: calc(50% - 10px);
+}
+
+@media (max-width: 600px) {
+    .recipe-list li {
+        width: 100%;
+    }
+}
