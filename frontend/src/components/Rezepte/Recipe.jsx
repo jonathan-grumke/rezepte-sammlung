@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 export default function Recipe() {
     const [recipe, setRecipe] = useState({});
     const [ingredients, setIngredients] = useState([]);
+    const [servings, setServings] = useState();
 
     // Extract recipe ID from URL
     const recipe_id = window.location.pathname.split("/").pop();
@@ -19,7 +20,10 @@ export default function Recipe() {
         const json = await res.json();
         setRecipe(json);
         setIngredients(json.ingredients);
+        setServings(json.servings);
         console.log("Fetched recipe:", json);
+        console.log("Servings set to:", json.servings);
+        console.log("servings state:", servings);
     }
 
     const delete_recipe = async (id) => {
@@ -54,17 +58,25 @@ export default function Recipe() {
                     <div>
                         <h1>{recipe.title}</h1>
                         <h2>Zutaten</h2>
-                        <p>Portionen: {recipe.servings}</p>
+                        <label>Portionen:
+                            <input
+                                type="number"
+                                name="servings" min="1" max="20" step="1"
+                                value={servings}
+                                onChange={(e) => setServings(e.target.value)}
+                                style={{ width: "60px" }}
+                            />
+                        </label>
                         <table>
                             <tr>
-                                <th>Menge</th>
                                 <th>Zutat</th>
+                                <th>Menge</th>
                             </tr>
                         </table>
                         {ingredients.map((ingredient) => (
                             <tr>
-                                <td>{ingredient.amount} {ingredient.unit}</td>
                                 <td>{ingredient.name}</td>
+                                <td>{ingredient.amount * servings / recipe.servings} {ingredient.unit}</td>
                             </tr>
                         ))}
                         <h2>Zubereitung</h2>
