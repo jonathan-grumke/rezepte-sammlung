@@ -28,6 +28,28 @@
     margin: 0;
 }
 
+.recipe-card-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+    color: #777;
+    margin: 10px 0;
+    justify-content: space-between;
+}
+
+.recipe-card-tags {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 12px;
+}
+
+.recipe-card-category, .recipe-card-time {
+    background-color: #e0e0e0;
+    border-radius: 100vw;
+    padding: 5px 10px;
+}
+
 .recipe-card-cta {
     display: flex;
     justify-content: flex-end;
