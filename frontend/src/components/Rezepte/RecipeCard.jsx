@@ -6,7 +6,9 @@ import { CategoryNameMap } from "../utils/sharedData";
 export default function RecipeCard({ recipe }) {
     return (
         <div className="recipe-card">
-            <img src="/uploads/2025-04-25 14.23.40.jpg" alt={recipe.title} className="recipe-card-hero" />
+            <img src={`/media/${recipe.image}`}
+                alt={recipe.title}
+                className="recipe-card-hero" />
             <div className="recipe-card-body">
                 <h3 className="recipe-card-title">{recipe.title}</h3>
                 <div className="recipe-card-meta">

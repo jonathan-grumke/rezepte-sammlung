@@ -28,21 +28,11 @@ export default function EditRecipe() {
         }
     };
 
-    const handleUpdate = async ({ title, category, instructions, ingredients, servings }) => {
-        let data = {
-            "title": title,
-            "category": category,
-            "instructions": instructions,
-            "ingredients": ingredients,
-            "servings": servings
-        }
+    const handleUpdate = async (formData) => {
         try {
             const res = await fetch(`/myapp/recipe/${recipe_id}/update`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
+                method: "POST",
+                body: formData,
             });
 
             if (!res.ok) {
@@ -70,7 +60,9 @@ export default function EditRecipe() {
             <Header />
             <h1>Rezept bearbeiten</h1>
             {initialData ? (
-                <RecipeForm initialData={initialData} onSubmit={handleUpdate} />
+                <>
+                    <RecipeForm initialData={initialData} onSubmit={handleUpdate} />
+                </>
             ) : (
                 <p>Lade Rezeptdaten...</p>
             )}

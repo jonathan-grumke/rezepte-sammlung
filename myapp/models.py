@@ -17,6 +17,12 @@ class Recipe(models.Model):
     ingredients = models.JSONField()
     instructions = models.TextField()
     servings = models.IntegerField(default=2)
+    image = models.ImageField(
+        upload_to='recipes/',
+        null=True,
+        blank=True,
+        default='recipes/default.jpg'
+        )
     
     def __str__(self):
         return self.title

@@ -17,14 +17,26 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
     const [instructions, setInstructions] = useState(initialData.instructions || "");
     const [ingredients, setIngredients] = useState(initialData.ingredients || []);
     const [servings, setServings] = useState(initialData.servings || 2);
+    const [image, setImage] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("category", category);
+        formData.append("instructions", instructions);
+        formData.append("ingredients", JSON.stringify(ingredients));
+        formData.append("servings", servings);
+        if (image) {
+            formData.append("image", image);
+        }
+
         if (!validateForm()) {
             alert("Bitte alle Felder ausfüllen und mindestens eine Zutat hinzufügen.");
             return;
         }
-        onSubmit({ title, category, instructions, ingredients, servings });
+        onSubmit(formData);
     };
 
     const validateForm = () => {
@@ -47,7 +59,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} enctype="multipart/form-data">
                 <div>
                     <label>Titel:
                         <input
@@ -94,18 +106,35 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                     <label>Portionen:
                         <input
                             type="number"
-                            name="servings"
-                            list="servings-options" min="1" max="20" step="1"
+                            name="servings" min="1" max="20" step="1"
                             value={servings}
                             onChange={(e) => setServings(e.target.value)}
                             style={{ width: "60px" }}
                         />
-                        <datalist id="servings-options">
-                            <option value="1" />
-                            <option value="2" />
-                            <option value="4" />
-                        </datalist>
                     </label>
+                </div>
+                <div>
+                    <label>Bild:
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                            onChange={(e) => setImage(e.target.files[0])}
+                        />
+                    </label>
+                    {image ? (
+                        <img
+                            src={URL.createObjectURL(image)}
+                            alt={title}
+                            width="400"
+                        />
+                    ) : (initialData.image && (
+                        <img
+                            src={`/media/${initialData.image}`}
+                            alt={title}
+                            width="400"
+                        />
+                    ))}
                 </div>
                 <div>
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />

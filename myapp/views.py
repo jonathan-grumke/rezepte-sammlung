@@ -28,27 +28,30 @@ def login_user(request):
 
 def get_recipes(request, category="all"):
     if (category == "all"):
-        recipes = Recipe.objects.all().values("id", "title", "category", "ingredients", "instructions", "servings")
+        recipes = Recipe.objects.all().values("id", "title", "category", "ingredients", "instructions", "servings", "image")
     else:
-        recipes = Recipe.objects.filter(category=category).values("id", "title", "category", "ingredients", "instructions", "servings")
+        recipes = Recipe.objects.filter(category=category).values("id", "title", "category", "ingredients", "instructions", "servings", "image")
     return JsonResponse({'recipes': list(recipes)}, safe=False)
 
 
 def get_recipe(request, id):
-    recipe = Recipe.objects.filter(id=id).values("id", "title", "category", "ingredients", "instructions", "servings").first()
+    recipe = Recipe.objects.filter(id=id).values("id", "title", "category", "ingredients", "instructions", "servings", "image").first()
     return JsonResponse(recipe, safe=False)
 
 
 @csrf_exempt
 def create_recipe(request):
     if request.method == "POST":
-        data = json.loads(request.body)
-        title = data.get("title")
-        category = data.get("category")
-        ingredients = data.get("ingredients")
-        instructions = data.get("instructions")
-        servings = data.get("servings", 2)
-        recipe = Recipe.objects.create(title=title, category=category, ingredients=ingredients, instructions=instructions, servings=servings)
+        # data = json.loads(request.body)
+        title = request.POST.get("title")
+        category = request.POST.get("category")
+        ingredients = json.loads(request.POST.get("ingredients", "{}"))
+        instructions = request.POST.get("instructions")
+        servings = request.POST.get("servings", 2)
+        image = request.FILES.get("image")
+        if(image is None):
+            image = 'recipes/default.jpg'
+        recipe = Recipe.objects.create(title=title, category=category, ingredients=ingredients, instructions=instructions, servings=servings, image=image)
         return JsonResponse({"message": "Recipe created successfully", "id": recipe.id}, status=201)
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
@@ -67,15 +70,16 @@ def delete_recipe(request, id):
 
 @csrf_exempt
 def update_recipe(request, id):
-    if request.method == "PUT":
+    if request.method == "POST":
         try:
-            data = json.loads(request.body)
+            # data = json.loads(request.body)
             recipe = Recipe.objects.get(id=id)
-            recipe.title = data.get("title", recipe.title)
-            recipe.category = data.get("category", recipe.category)
-            recipe.ingredients = data.get("ingredients", recipe.ingredients)
-            recipe.instructions = data.get("instructions", recipe.instructions)
-            recipe.servings = data.get("servings", recipe.servings)
+            recipe.title = request.POST.get("title", recipe.title)
+            recipe.category = request.POST.get("category", recipe.category)
+            recipe.ingredients = json.loads(request.POST.get("ingredients", recipe.ingredients))
+            recipe.instructions = request.POST.get("instructions", recipe.instructions)
+            recipe.servings = request.POST.get("servings", recipe.servings)
+            recipe.image = request.FILES.get("image", recipe.image)
             recipe.save()
             return JsonResponse({"message": "Recipe updated successfully"}, status=200)
         except Recipe.DoesNotExist:
