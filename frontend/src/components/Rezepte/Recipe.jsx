@@ -57,6 +57,7 @@ export default function Recipe() {
                 {recipe ? (
                     <div>
                         <h1>{recipe.title}</h1>
+                        <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={200} />
                         <h2>Zutaten</h2>
                         <label>Portionen:
                             <input
