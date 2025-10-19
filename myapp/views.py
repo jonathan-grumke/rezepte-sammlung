@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 import json
+import copy
 from django.contrib.auth import login, authenticate
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from .models import Recipe;
@@ -61,6 +62,8 @@ def delete_recipe(request, id):
     if request.method == "DELETE":
         try:
             recipe = Recipe.objects.get(id=id)
+            if recipe.image and recipe.image.name != 'recipes/default.jpg':
+                    recipe.image.delete(save=False)
             recipe.delete()
             return JsonResponse({"message": "Recipe deleted successfully"}, status=200)
         except Recipe.DoesNotExist:
@@ -79,7 +82,10 @@ def update_recipe(request, id):
             recipe.ingredients = json.loads(request.POST.get("ingredients", recipe.ingredients))
             recipe.instructions = request.POST.get("instructions", recipe.instructions)
             recipe.servings = request.POST.get("servings", recipe.servings)
+            old_image = copy.deepcopy(recipe.image)
             recipe.image = request.FILES.get("image", recipe.image)
+            if old_image != recipe.image and old_image.name != 'recipes/default.jpg':
+                old_image.delete(save=False)
             recipe.save()
             return JsonResponse({"message": "Recipe updated successfully"}, status=200)
         except Recipe.DoesNotExist:
