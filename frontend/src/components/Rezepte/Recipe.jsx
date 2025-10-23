@@ -2,6 +2,7 @@ import "./Recipe.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
+import { CategoryNameMap } from "../utils/sharedData";
 
 export default function Recipe() {
     const [recipe, setRecipe] = useState({});
@@ -56,8 +57,10 @@ export default function Recipe() {
             <div className="rezept-container">
                 {recipe ? (
                     <div>
-                        <h1>{recipe.title}</h1>
                         <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={200} />
+                        <h1>{recipe.title}</h1>
+                        <p>Kategorie: {recipe.category && CategoryNameMap.get(recipe.category).single}</p>
+                        <p>Zubereitungszeit: {recipe.time} Minuten</p>
                         <h2>Zutaten</h2>
                         <label>Portionen:
                             <input

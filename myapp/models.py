@@ -17,12 +17,16 @@ class Recipe(models.Model):
     ingredients = models.JSONField()
     instructions = models.TextField()
     servings = models.IntegerField(default=2)
+    time = models.IntegerField(help_text="Zubereitungszeit in Minuten", default=30)
     image = models.ImageField(
         upload_to='recipes/',
         null=True,
         blank=True,
         default='recipes/default.jpg'
-        )
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    published = models.BooleanField(default=False)
     
     def __str__(self):
         return self.title

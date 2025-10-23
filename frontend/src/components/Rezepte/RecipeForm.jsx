@@ -17,6 +17,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
     const [instructions, setInstructions] = useState(initialData.instructions || "");
     const [ingredients, setIngredients] = useState(initialData.ingredients || []);
     const [servings, setServings] = useState(initialData.servings || 2);
+    const [time, setTime] = useState(initialData.time || null);
+    const [published, setPublished] = useState(initialData.published || false);
     const [image, setImage] = useState(null);
 
     const handleSubmit = (e) => {
@@ -28,6 +30,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
         formData.append("instructions", instructions);
         formData.append("ingredients", JSON.stringify(ingredients));
         formData.append("servings", servings);
+        formData.append("time", time);
+        formData.append("published", published);
         if (image) {
             formData.append("image", image);
         }
@@ -90,6 +94,31 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                     </label>
                 </div>
                 <div>
+                    <label>Portionen:
+                        <input
+                            type="number"
+                            name="servings" min="1" max="20" step="1"
+                            value={servings}
+                            onChange={(e) => setServings(e.target.value)}
+                            style={{ width: "60px" }}
+                        />
+                    </label>
+                </div>
+                <div>
+                    <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
+                </div>
+                <div>
+                    <label>Zubereitungszeit (Minuten):
+                        <input
+                            type="number"
+                            name="time"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                            style={{ width: "60px" }}
+                        />
+                    </label>
+                </div>
+                <div>
                     <label>Anweisungen:</label>
                     <Editor value={instructions} onChange={(e) => setInstructions(e.target.value)}>
                         <Toolbar>
@@ -101,17 +130,6 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                             <BtnLink />
                         </ Toolbar>
                     </Editor>
-                </div>
-                <div>
-                    <label>Portionen:
-                        <input
-                            type="number"
-                            name="servings" min="1" max="20" step="1"
-                            value={servings}
-                            onChange={(e) => setServings(e.target.value)}
-                            style={{ width: "60px" }}
-                        />
-                    </label>
                 </div>
                 <div>
                     <label>Bild:
@@ -137,7 +155,15 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                     ))}
                 </div>
                 <div>
-                    <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
+                    <label>
+                        Rezept veröffentlichen:
+                        <input
+                            type="checkbox"
+                            name="published"
+                            checked={published}
+                            onChange={(e) => setPublished(e.target.checked)}
+                        />
+                    </label>
                 </div>
                 <button type="submit">Rezept speichern</button>
                 <button type="button" onClick={handleCancel}>Abbrechen</button>
