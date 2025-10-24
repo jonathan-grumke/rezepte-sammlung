@@ -73,10 +73,10 @@ export default function IngredientList({ ingredients, setIngredients }) {
                                 <span className="">{ingredient.name}</span> – {ingredient.amount} {ingredient.unit}
                             </div>
                             <div className="">
-                                <button type='button' onClick={() => handleEdit(index)}>
+                                <button className='edit-button' type='button' onClick={() => handleEdit(index)}>
                                     Bearbeiten
                                 </button>
-                                <button type='button' onClick={() => handleDelete(index)}>
+                                <button className='delete-button' type='button' onClick={() => handleDelete(index)}>
                                     Löschen
                                 </button>
                             </div>

@@ -1,0 +1,135 @@
+/* General form container */
+.form-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #333;
+}
+
+/* Each field group */
+.field-group {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+/* Text, number, file, and select inputs */
+.input-field {
+  margin-top: 6px;
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Focus states */
+form input:focus,
+form select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+  outline: none;
+}
+
+/* Checkbox styling */
+.checkbox-label {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkbox-label input {
+  width: auto;
+  margin-left: 8px;
+  transform: scale(1.2);
+  accent-color: #3498db;
+}
+
+/* Image preview */
+form img {
+  display: block;
+  margin-top: 12px;
+  border-radius: 6px;
+  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+}
+
+/* Editor styling (for WYSIWYG) */
+form .editor-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: #fafafa;
+}
+
+form .toolbar {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+}
+
+/* Buttons */
+.submit-button,
+.cancel-button {
+  display: inline-block;
+  margin-right: 12px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Primary (submit) button */
+.submit-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #2c80b4;
+}
+
+/* Secondary (cancel) button */
+.cancel-button {
+  background-color: #ccc;
+  color: #222;
+}
+
+.cancel-button:hover {
+  background-color: #b3b3b3;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  form {
+    padding: 16px;
+  }
+
+  form input[type="text"],
+  form input[type="number"],
+  form select {
+    max-width: 100%;
+  }
+
+  form button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

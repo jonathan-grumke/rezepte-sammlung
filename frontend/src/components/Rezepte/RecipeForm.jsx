@@ -10,6 +10,7 @@ import Editor, {
     BtnUnderline,
     Toolbar,
 } from 'react-simple-wysiwyg';
+import "./RecipeForm.css";
 
 export default function RezeptForm({ initialData = {}, onSubmit }) {
     const [title, setTitle] = useState(initialData.title || "");
@@ -63,10 +64,14 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
 
     return (
         <>
-            <form onSubmit={handleSubmit} enctype="multipart/form-data">
-                <div>
+            <form
+                className="form-container"
+                onSubmit={handleSubmit}
+                enctype="multipart/form-data">
+                <div className="field-group">
                     <label>Titel:
                         <input
+                            className="input-field"
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -75,9 +80,10 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <div>
+                <div className="field-group">
                     <label>Kategorie:
                         <select
+                            className="input-field"
                             onChange={(e) => setCategory(e.target.value)}
                             required
                             value={category}
@@ -93,9 +99,10 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         </select>
                     </label>
                 </div>
-                <div>
+                <div className="field-group">
                     <label>Portionen:
                         <input
+                            className="input-field"
                             type="number"
                             name="servings" min="1" max="20" step="1"
                             value={servings}
@@ -104,12 +111,13 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <div>
+                <div className="field-group">
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
                 </div>
-                <div>
+                <div className="field-group">
                     <label>Zubereitungszeit (Minuten):
                         <input
+                            className="input-field"
                             type="number"
                             name="time"
                             value={time}
@@ -118,7 +126,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <div>
+                <div className="field-group">
                     <label>Anweisungen:</label>
                     <Editor value={instructions} onChange={(e) => setInstructions(e.target.value)}>
                         <Toolbar>
@@ -131,9 +139,10 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         </ Toolbar>
                     </Editor>
                 </div>
-                <div>
+                <div className="field-group">
                     <label>Bild:
                         <input
+                            className="input-field"
                             type="file"
                             name="image"
                             accept="image/*"
@@ -154,8 +163,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     ))}
                 </div>
-                <div>
-                    <label>
+                <div className="field-group">
+                    <label className="checkbox-label">
                         Rezept veröffentlichen:
                         <input
                             type="checkbox"
@@ -165,8 +174,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <button type="submit">Rezept speichern</button>
-                <button type="button" onClick={handleCancel}>Abbrechen</button>
+                <button className="submit-button" type="submit">Rezept speichern</button>
+                <button className="cancel-button" type="button" onClick={handleCancel}>Abbrechen</button>
             </form >
         </>
     )

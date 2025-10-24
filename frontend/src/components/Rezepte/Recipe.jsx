@@ -54,7 +54,7 @@ export default function Recipe() {
         <>
             <Header />
             <title>{recipe.title}</title>
-            <div className="rezept-container">
+            <div className="recipe-container">
                 {recipe ? (
                     <div>
                         <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={200} />
@@ -64,6 +64,7 @@ export default function Recipe() {
                         <h2>Zutaten</h2>
                         <label>Portionen:
                             <input
+                                id="servings-input"
                                 type="number"
                                 name="servings" min="1" max="20" step="1"
                                 value={servings}
@@ -71,20 +72,22 @@ export default function Recipe() {
                                 style={{ width: "60px" }}
                             />
                         </label>
-                        <table>
+                        <table className="ingredients-table">
                             <tr>
                                 <th>Zutat</th>
                                 <th>Menge</th>
                             </tr>
+                            {ingredients.map((ingredient) => (
+                                <tr>
+                                    <td>{ingredient.name}</td>
+                                    <td>{ingredient.amount * servings / recipe.servings} {ingredient.unit}</td>
+                                </tr>
+                            ))}
                         </table>
-                        {ingredients.map((ingredient) => (
-                            <tr>
-                                <td>{ingredient.name}</td>
-                                <td>{ingredient.amount * servings / recipe.servings} {ingredient.unit}</td>
-                            </tr>
-                        ))}
                         <h2>Zubereitung</h2>
-                        <div dangerouslySetInnerHTML={{ __html: recipe.instructions }} >
+                        <div
+                            className="instructions-container"
+                            dangerouslySetInnerHTML={{ __html: recipe.instructions }} >
                         </div>
                         {isLoggedIn &&
                             <>
@@ -93,7 +96,7 @@ export default function Recipe() {
                             </>
                         }
                     </div>
-                ) : (<p>Lade Rezept...</p>)
+                ) : (<p className="loading-text">Lade Rezept...</p>)
                 }
             </div>
         </>
