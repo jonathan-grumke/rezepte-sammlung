@@ -1,0 +1,60 @@
+.ingredient-form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.ingredient-form--input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin: 4px 4px 4px 0;
+}
+
+.ingredient-form--name-input {
+  flex-grow: 2;
+}
+
+.ingredient-form--input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+  outline: none;
+}
+
+.ingredient-form > button {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  margin: 4px 0;
+}
+
+.ingredient-item {
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ingredient-item--buttons {
+  display: flex;
+}
+
+.ingredient-item--button {
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .ingredient-form--name-input {
+    flex-grow: 1;
+  }
+  .ingredient-form--input {
+    flex-grow: 1;
+  }
+}
