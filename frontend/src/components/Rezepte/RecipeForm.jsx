@@ -1,5 +1,5 @@
 import "../assets/styles.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import IngredientList from "../Ingredients/IngredientList";
 import Editor, {
     BtnBold,
@@ -65,13 +65,13 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
     return (
         <>
             <form
-                className="form-container"
+                className="recipe-form"
                 onSubmit={handleSubmit}
                 enctype="multipart/form-data">
-                <div className="field-group">
-                    <label>Titel:
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label">Titel:
                         <input
-                            className="input-field"
+                            className="recipe-form--input-field"
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
@@ -80,10 +80,10 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <div className="field-group">
-                    <label>Kategorie:
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label">Kategorie:
                         <select
-                            className="input-field"
+                            className="recipe-form--input-field"
                             onChange={(e) => setCategory(e.target.value)}
                             required
                             value={category}
@@ -99,10 +99,10 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         </select>
                     </label>
                 </div>
-                <div className="field-group">
-                    <label>Portionen:
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label">Portionen:
                         <input
-                            className="input-field"
+                            className="recipe-form--input-field"
                             type="number"
                             name="servings" min="1" max="20" step="1"
                             value={servings}
@@ -111,13 +111,13 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <div className="field-group">
+                <div className="recipe-form--field-group">
                     <IngredientList ingredients={ingredients} setIngredients={setIngredients} />
                 </div>
-                <div className="field-group">
-                    <label>Zubereitungszeit (Minuten):
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label">Zubereitungszeit (Minuten):
                         <input
-                            className="input-field"
+                            className="recipe-form--input-field"
                             type="number"
                             name="time"
                             value={time}
@@ -126,8 +126,8 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         />
                     </label>
                 </div>
-                <div className="field-group">
-                    <label>Anweisungen:</label>
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label">Anweisungen:</label>
                     <Editor value={instructions} onChange={(e) => setInstructions(e.target.value)}>
                         <Toolbar>
                             <BtnBold />
@@ -139,10 +139,10 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                         </ Toolbar>
                     </Editor>
                 </div>
-                <div className="field-group">
-                    <label>Bild:
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label">Bild:
                         <input
-                            className="input-field"
+                            className="recipe-form--input-field"
                             type="file"
                             name="image"
                             accept="image/*"
@@ -154,28 +154,31 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                             src={URL.createObjectURL(image)}
                             alt={title}
                             width="400"
+                            className="recipe-form--preview-image"
                         />
                     ) : (initialData.image && (
                         <img
                             src={`/media/${initialData.image}`}
                             alt={title}
                             width="400"
+                            className="recipe-form--preview-image"
                         />
                     ))}
                 </div>
-                <div className="field-group">
-                    <label className="checkbox-label">
+                <div className="recipe-form--field-group">
+                    <label className="recipe-form--label recipe-form--checkbox-label">
                         Rezept veröffentlichen:
                         <input
                             type="checkbox"
                             name="published"
                             checked={published}
                             onChange={(e) => setPublished(e.target.checked)}
+                            className="recipe-form--checkbox"
                         />
                     </label>
                 </div>
-                <button className="submit-button" type="submit">Rezept speichern</button>
-                <button className="cancel-button" type="button" onClick={handleCancel}>Abbrechen</button>
+                <button className="recipe-form--submit-button" type="submit">Rezept speichern</button>
+                <button className="recipe-form--cancel-button" type="button" onClick={handleCancel}>Abbrechen</button>
             </form >
         </>
     )
