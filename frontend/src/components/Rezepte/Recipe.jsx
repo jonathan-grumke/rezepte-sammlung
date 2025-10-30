@@ -82,7 +82,7 @@ export default function Recipe() {
                             {ingredients.map((ingredient) => (
                                 <tr>
                                     <td>{ingredient.name}</td>
-                                    <td>{ingredient.amount * servings / recipe.servings} {ingredient.unit}</td>
+                                    <td>{Math.round(ingredient.amount * servings / recipe.servings)} {ingredient.unit}</td>
                                 </tr>
                             ))}
                         </table>
