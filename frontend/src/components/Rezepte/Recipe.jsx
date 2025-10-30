@@ -57,10 +57,12 @@ export default function Recipe() {
             <div className="recipe-container">
                 {recipe ? (
                     <div>
-                        <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={200} />
+                        <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={400} />
                         <h1>{recipe.title}</h1>
-                        <p>Kategorie: {recipe.category && CategoryNameMap.get(recipe.category).single}</p>
-                        <p>Zubereitungszeit: {recipe.time} Minuten</p>
+                        <div className="recipe-card-tags">
+                            <span className="recipe-card-category">{recipe.category && CategoryNameMap.get(recipe.category).single}</span>
+                            <span className="recipe-card-time">{recipe.time} Min.</span>
+                        </div>
                         <h2>Zutaten</h2>
                         <label>Portionen:
                             <input
