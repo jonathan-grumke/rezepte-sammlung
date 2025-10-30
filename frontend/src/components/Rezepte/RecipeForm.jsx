@@ -18,7 +18,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
     const [instructions, setInstructions] = useState(initialData.instructions || "");
     const [ingredients, setIngredients] = useState(initialData.ingredients || []);
     const [servings, setServings] = useState(initialData.servings || 2);
-    const [time, setTime] = useState(initialData.time || null);
+    const [time, setTime] = useState(initialData.time || "");
     const [published, setPublished] = useState(initialData.published || false);
     const [image, setImage] = useState(null);
 
