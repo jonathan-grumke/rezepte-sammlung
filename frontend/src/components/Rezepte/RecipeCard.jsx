@@ -14,7 +14,7 @@ export default function RecipeCard({ recipe }) {
                 <div className="recipe-card-meta">
                     <div className="recipe-card-tags">
                         <span className="recipe-card-category">{CategoryNameMap.get(recipe.category).single}</span>
-                        <span className="recipe-card-time">30 Min.</span>
+                        <span className="recipe-card-time">{recipe.time} Min.</span>
                     </div>
                     <div className="recipe-card-cta">
                         <Cta target={"/rezept/" + recipe.id} text="Zum Rezept" />
