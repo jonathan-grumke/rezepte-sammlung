@@ -122,7 +122,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                             name="time"
                             value={time}
                             onChange={(e) => setTime(e.target.value)}
-                            style={{ width: "60px" }}
+                            style={{ width: "100px" }}
                         />
                     </label>
                 </div>
