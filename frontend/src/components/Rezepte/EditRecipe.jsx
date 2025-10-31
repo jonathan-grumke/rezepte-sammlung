@@ -57,14 +57,16 @@ export default function EditRecipe() {
     return (
         <>
             <Header />
-            <h1>Rezept bearbeiten</h1>
-            {initialData ? (
-                <>
-                    <RecipeForm initialData={initialData} onSubmit={handleUpdate} />
-                </>
-            ) : (
-                <p>Lade Rezeptdaten...</p>
-            )}
+            <div className="max-width-800">
+                <h1>Rezept bearbeiten</h1>
+                {initialData ? (
+                    <>
+                        <RecipeForm initialData={initialData} onSubmit={handleUpdate} />
+                    </>
+                ) : (
+                    <p>Lade Rezeptdaten...</p>
+                )}
+            </div>
         </>
     );
 }

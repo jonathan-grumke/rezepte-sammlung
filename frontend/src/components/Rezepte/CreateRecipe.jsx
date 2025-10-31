@@ -29,13 +29,15 @@ export default function CreateRecipe() {
     return (
         <>
             <Header />
-            <title>Neues Rezept</title>
-            <h1>Rezept erstellen</h1>
-            {/* Check if user is logged in */}
-            {!isLoggedIn && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
-            {isLoggedIn &&
-                <RecipeForm onSubmit={handleCreate} />
-            }
+            <div className="max-width-800">
+                <title>Neues Rezept</title>
+                <h1>Rezept erstellen</h1>
+                {/* Check if user is logged in */}
+                {!isLoggedIn && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
+                {isLoggedIn &&
+                    <RecipeForm onSubmit={handleCreate} />
+                }
+            </div>
         </>
     );
 }

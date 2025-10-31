@@ -15,6 +15,9 @@ export default function Header() {
                     Angemeldet als {sessionStorage.getItem("username")} | <a href="#" onClick={() => { sessionStorage.removeItem("username"); window.location.href = "/"; }}>Logout</a>
                 </div>
             }
+            {isLoggedIn &&
+                <a href="/neues-rezept">Neues Rezept erstellen</a>
+            }
         </header>
     )
 }

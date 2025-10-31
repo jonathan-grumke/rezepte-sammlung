@@ -1,7 +1,16 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
+  margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.max-width-800 {
   max-width: 800px;
   margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
 }

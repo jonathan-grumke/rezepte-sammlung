@@ -3,11 +3,15 @@ import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import RecipeCard from "./RecipeCard";
-import { CategoryNameMap } from "../utils/sharedData";
+import { CategoryDisplayMap } from "../utils/sharedData";
+import CategoryBar from "../Header/CategorySelector";
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
-    const [categories, setCategories] = useState([]);
+    // const [categories, setCategories] = useState([]);
+    const categories = [...CategoryDisplayMap.keys()];
+    const [selectedCategory, setSelectedCategory] = useState("all");
+
 
     const recipes_url = "/myapp/recipes";
 
@@ -21,13 +25,13 @@ export default function Recipes() {
         });
         const json = await res.json();
         const recipes = json.recipes;
-        let categories = [];
-        recipes.forEach((recipe) => {
-            categories.push(recipe.category);
-        });
-        categories = [...new Set(categories)];
+        // let categories = [];
+        // recipes.forEach((recipe) => {
+        //     categories.push(recipe.category);
+        // });
+        // categories = [...new Set(categories)];
         setRecipes(recipes);
-        setCategories(categories);
+        // setCategories(categories);
     }
 
     const filter_by_category = async (category) => {
@@ -45,6 +49,11 @@ export default function Recipes() {
         setRecipes(json.recipes);
     }
 
+    const handleCategorySelect = (category) => {
+        setSelectedCategory(category);
+        filter_by_category(category);
+    };
+
     useEffect(() => {
         get_recipes();
     }, []);
@@ -55,23 +64,23 @@ export default function Recipes() {
         <>
             <Header />
             <title>Rezepte</title>
-            <div>
-                <h1>Rezepte</h1>
-                {isLoggedIn &&
-                    <a href="/neues-rezept">Neues Rezept erstellen</a>
-                }
-                <label for="category">Kategorie
+            <CategoryBar categories={categories} onSelectCategory={handleCategorySelect} />
+            {/* <label for="category">Kategorie
                     <select name="category" id="category" onChange={(e) => filter_by_category(e.target.value)}>
                         <option value="all" selected>Alle</option>
                         {categories.map((category) => (
-                            <option value={category}>{CategoryNameMap.get(category).plural}</option>
+                            <option value={category}>{CategoryDisplayMap.get(category).plural}</option>
                         ))}
                     </select>
-                </label>
+                </label> */}
+            <div className="max-width-800 recipes-container">
                 {categories.map((category) => (
                     recipes.filter(recipe => recipe.category === category).length > 0 && (
                         <div key={category}>
-                            <h2>{CategoryNameMap.get(category).plural}</h2>
+                            <h2>
+                                <span className="recipe-list--category-icon">{CategoryDisplayMap.get(category).icon}</span>
+                                {CategoryDisplayMap.get(category).plural}
+                            </h2>
                             <ul className="recipe-list">
                                 {recipes.filter(recipe => recipe.category === category).map((recipe) => (
                                     <li key={recipe.id}>
