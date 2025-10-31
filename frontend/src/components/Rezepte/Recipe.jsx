@@ -34,7 +34,7 @@ export default function Recipe() {
             });
             if (res.ok) {
                 alert("Rezept erfolgreich gelöscht.");
-                window.location.href = "/rezepte";
+                window.location.href = "/";
             } else {
                 alert("Fehler beim Löschen des Rezepts.");
             }

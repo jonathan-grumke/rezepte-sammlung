@@ -54,7 +54,7 @@ export default function RezeptForm({ initialData = {}, onSubmit }) {
                 window.location.href = `/rezept/${initialData.id}`;
             }
             else {
-                window.location.href = "/rezepte";
+                window.location.href = "/";
             }
         }
         else {

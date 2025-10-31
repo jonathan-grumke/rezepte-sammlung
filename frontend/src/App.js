@@ -8,8 +8,8 @@ import EditRecipe from "./components/Rezepte/EditRecipe";
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Recipes />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/rezepte" element={<Recipes />} />
       <Route path="/rezept/:id" element={<Recipe />} />
       <Route path="/neues-rezept" element={<CreateRecipe />} />
       <Route path="/rezept/:id/bearbeiten" element={<EditRecipe />} />

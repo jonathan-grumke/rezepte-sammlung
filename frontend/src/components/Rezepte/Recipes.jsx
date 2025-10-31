@@ -65,14 +65,6 @@ export default function Recipes() {
             <Header />
             <title>Rezepte</title>
             <CategoryBar categories={categories} onSelectCategory={handleCategorySelect} />
-            {/* <label for="category">Kategorie
-                    <select name="category" id="category" onChange={(e) => filter_by_category(e.target.value)}>
-                        <option value="all" selected>Alle</option>
-                        {categories.map((category) => (
-                            <option value={category}>{CategoryDisplayMap.get(category).plural}</option>
-                        ))}
-                    </select>
-                </label> */}
             <div className="max-width-800 recipes-container">
                 {categories.map((category) => (
                     recipes.filter(recipe => recipe.category === category).length > 0 && (

@@ -8,7 +8,7 @@ export default function Header() {
         <header>
             <ul>
                 <li><a href="/login">Login</a></li>
-                <li><a href="/rezepte">Rezepte</a></li>
+                <li><a href="/">Rezepte</a></li>
             </ul>
             {isLoggedIn &&
                 <div>
