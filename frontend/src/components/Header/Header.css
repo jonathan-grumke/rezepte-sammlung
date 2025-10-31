@@ -1,0 +1,10 @@
+.header-logo {
+  font-family: Georgia, serif;
+  font-size: 3rem;
+  font-weight: 400;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  margin: 40px auto;
+  color: #333;
+}

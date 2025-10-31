@@ -1,23 +1,15 @@
 import "../assets/styles.css";
+import "./Header.css";
 import { useState, useEffect } from "react";
+import SidebarMenu from "./SidebarMenu";
 
 export default function Header() {
     const isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
 
     return (
         <header>
-            <ul>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/">Rezepte</a></li>
-            </ul>
-            {isLoggedIn &&
-                <div>
-                    Angemeldet als {sessionStorage.getItem("username")} | <a href="#" onClick={() => { sessionStorage.removeItem("username"); window.location.href = "/"; }}>Logout</a>
-                </div>
-            }
-            {isLoggedIn &&
-                <a href="/neues-rezept">Neues Rezept erstellen</a>
-            }
+            <a href="/" className="header-logo">Moniques Kochbuch</a>
+            <SidebarMenu />
         </header>
     )
 }
