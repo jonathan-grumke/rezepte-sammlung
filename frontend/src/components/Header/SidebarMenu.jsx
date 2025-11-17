@@ -62,6 +62,30 @@ export default function SidebarMenu() {
 
     const isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
 
+    const currentUser = () => {
+        fetch('/myapp/current_user')
+            .then(response => response.json())
+            .then(data => {
+                if (data.username) {
+                    sessionStorage.setItem("username", data.username);
+                }
+            })
+            .catch(error => console.error('Error fetching current user:', error));
+    };
+
+    useEffect(() => {
+        currentUser();
+    }, []);
+
+    const handleLogout = () => {
+        fetch('/myapp/logout', {
+            credentials: 'include',
+        });
+        currentUser();
+        sessionStorage.removeItem("username");
+        window.location.href = "/";
+    };
+
     return (
         <>
             <button
@@ -93,7 +117,7 @@ export default function SidebarMenu() {
                                 Angemeldet als {sessionStorage.getItem("username")}
                             </li>
                             <li>
-                                <a href="#" onClick={() => { sessionStorage.removeItem("username"); window.location.href = "/"; }}>Logout</a>
+                                <button onClick={handleLogout}>Logout</button>
                             </li>
                         </>
                     }

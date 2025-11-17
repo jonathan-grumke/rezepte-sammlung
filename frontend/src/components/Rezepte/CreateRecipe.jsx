@@ -1,12 +1,20 @@
 import "../assets/styles.css";
 import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
+import { getCSRF } from "../utils/auth";
 
 export default function CreateRecipe() {
     const handleCreate = async (formData) => {
+
+        const { csrfToken } = await getCSRF();
+
         try {
             const res = await fetch("/myapp/recipe/create", {
                 method: "POST",
+                credentials: "include",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                },
                 body: formData,
             });
 

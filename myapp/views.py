@@ -2,28 +2,52 @@ from django.http import JsonResponse
 from django.shortcuts import render
 import json
 import copy
-from django.contrib.auth import login, authenticate
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.auth import login, logout, authenticate
+from django.middleware.csrf import get_token
 from .models import Recipe;
 
 
-def home(request):
-    return JsonResponse({'message': 'Hello, world!'})
+def get_csrf(request):
+    return JsonResponse({"csrfToken": get_token(request)})
 
 
-@csrf_exempt
 def login_user(request):
     # Get username and password from request.POST dictionary
     data = json.loads(request.body)
     username = data['username']
     password = data['password']
     # Try to check if provide credential can be authenticated
-    user = authenticate(username=username, password=password)
+    user = authenticate(request, username=username, password=password)
     data = {"username": username}
     if user is not None:
         # If user is valid, call login method to login current user
         login(request, user)
         data = {"username": username, "status": "Authenticated"}
+    return JsonResponse(data)
+
+
+def logout_user(request):
+    logout(request)
+    return JsonResponse({
+        "message": "Logged out successfully",
+        "success": True
+    })
+
+
+def current_user(request):
+    user = request.user
+    if user.is_authenticated:
+        data = {
+            "authenticated": True,
+            "username": user.username,
+            "firstname": user.first_name,
+            "role": user.role,
+        }
+    else:
+        data = {
+            "authenticated": False,
+            "role": "guest"
+        }
     return JsonResponse(data)
 
 
@@ -44,7 +68,6 @@ def get_recipe(request, id):
             return JsonResponse({"error": "Recipe not found"}, status=404)
 
 
-@csrf_exempt
 def create_recipe(request):
     if request.method == "POST":
         # data = json.loads(request.body)
@@ -63,7 +86,6 @@ def create_recipe(request):
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
-@csrf_exempt
 def delete_recipe(request, id):
     if request.method == "DELETE":
         try:
@@ -77,7 +99,6 @@ def delete_recipe(request, id):
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
-@csrf_exempt
 def update_recipe(request, id):
     if request.method == "POST":
         try:

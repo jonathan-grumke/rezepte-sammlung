@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./Login.css";
 import "../assets/styles.css";
 import Header from "../Header/Header";
+import { getCSRF } from "../utils/auth";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -13,10 +14,14 @@ export default function Login() {
 
         let login_url = window.location.origin + "/myapp/login";
 
+        const { csrfToken } = await getCSRF();
+
         const res = await fetch(login_url, {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
             },
             body: JSON.stringify({
                 "username": username,
