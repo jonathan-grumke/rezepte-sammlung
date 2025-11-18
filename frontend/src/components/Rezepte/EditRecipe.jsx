@@ -2,7 +2,7 @@ import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
-import { getCSRF } from "../utils/auth";
+import Cookies from "js-cookie";
 
 export default function EditRecipe() {
     // Extract recipe ID from URL
@@ -29,7 +29,9 @@ export default function EditRecipe() {
     };
 
     const handleUpdate = async (formData) => {
-        const { csrfToken } = await getCSRF();
+
+        const csrfToken = Cookies.get("csrftoken");
+
         try {
             const res = await fetch(`/myapp/recipe/${recipe_id}/update`, {
                 method: "POST",

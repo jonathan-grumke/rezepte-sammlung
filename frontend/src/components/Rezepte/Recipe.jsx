@@ -3,7 +3,7 @@ import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import { CategoryDisplayMap } from "../utils/sharedData";
-import { getCSRF } from "../utils/auth";
+import Cookies from "js-cookie";
 
 export default function Recipe() {
     const [recipe, setRecipe] = useState({});
@@ -13,7 +13,6 @@ export default function Recipe() {
     // Extract recipe ID from URL
     const recipe_id = window.location.pathname.split("/").pop();
     console.log(recipe_id);
-
 
     const get_recipe = async (id) => {
         const res = await fetch(`/myapp/recipe/${id}`, {
@@ -30,7 +29,7 @@ export default function Recipe() {
 
     const delete_recipe = async (id) => {
 
-        const { csrfToken } = await getCSRF();
+        const csrfToken = Cookies.get("csrftoken");
 
         if (window.confirm("Möchten Sie dieses Rezept wirklich löschen?")) {
             const res = await fetch(`/myapp/recipe/${id}/delete`, {

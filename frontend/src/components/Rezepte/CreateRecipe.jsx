@@ -1,12 +1,12 @@
 import "../assets/styles.css";
 import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
-import { getCSRF } from "../utils/auth";
+import Cookies from "js-cookie";
 
 export default function CreateRecipe() {
     const handleCreate = async (formData) => {
 
-        const { csrfToken } = await getCSRF();
+        const csrfToken = Cookies.get("csrftoken");
 
         try {
             const res = await fetch("/myapp/recipe/create", {
