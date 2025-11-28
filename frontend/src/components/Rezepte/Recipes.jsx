@@ -3,12 +3,11 @@ import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import RecipeCard from "./RecipeCard";
-import { CategoryDisplayMap } from "../utils/sharedData";
+import { CategoryDisplayMap } from "../../utils/sharedData";
 import CategoryBar from "../Header/CategorySelector";
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
-    // const [categories, setCategories] = useState([]);
     const categories = [...CategoryDisplayMap.keys()];
     const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -25,13 +24,7 @@ export default function Recipes() {
         });
         const json = await res.json();
         const recipes = json.recipes;
-        // let categories = [];
-        // recipes.forEach((recipe) => {
-        //     categories.push(recipe.category);
-        // });
-        // categories = [...new Set(categories)];
         setRecipes(recipes);
-        // setCategories(categories);
     }
 
     const filter_by_category = async (category) => {
@@ -57,8 +50,6 @@ export default function Recipes() {
     useEffect(() => {
         get_recipes();
     }, []);
-
-    const isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
 
     return (
         <>

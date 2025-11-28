@@ -2,13 +2,16 @@ import "./Recipe.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
-import { CategoryDisplayMap } from "../utils/sharedData";
+import { CategoryDisplayMap } from "../../utils/sharedData";
 import Cookies from "js-cookie";
+import { useAuth } from '../../hooks/AuthProvider';
 
 export default function Recipe() {
     const [recipe, setRecipe] = useState({});
     const [ingredients, setIngredients] = useState([]);
     const [servings, setServings] = useState();
+
+    const auth = useAuth();
 
     // Extract recipe ID from URL
     const recipe_id = window.location.pathname.split("/").pop();
@@ -55,8 +58,6 @@ export default function Recipe() {
         get_recipe(recipe_id);
     }, [recipe_id]);
 
-    let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
-
     return (
         <>
             <Header />
@@ -98,7 +99,7 @@ export default function Recipe() {
                             className="instructions-container"
                             dangerouslySetInnerHTML={{ __html: recipe.instructions }} >
                         </div>
-                        {isLoggedIn &&
+                        {auth.user?.role == "admin" &&
                             <>
                                 <button onClick={() => delete_recipe(recipe.id)} className="delete-button">Rezept löschen</button>
                                 <a href={"/rezept/" + recipe.id + "/bearbeiten"} className="edit-button">Rezept bearbeiten</a>

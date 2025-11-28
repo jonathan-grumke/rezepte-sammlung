@@ -1,7 +1,7 @@
 import "./RecipeCard.css";
 import "../assets/styles.css";
 import Cta from "../Buttons/Cta";
-import { CategoryDisplayMap } from "../utils/sharedData";
+import { CategoryDisplayMap } from "../../utils/sharedData";
 
 export default function RecipeCard({ recipe }) {
     return (

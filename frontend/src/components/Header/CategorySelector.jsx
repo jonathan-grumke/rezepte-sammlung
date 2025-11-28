@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CategoryDisplayMap } from "../utils/sharedData";
+import { CategoryDisplayMap } from "../../utils/sharedData";
 import "../assets/styles.css";
 import "./CategorySelector.css";
 
