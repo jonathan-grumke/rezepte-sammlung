@@ -22,7 +22,10 @@ def login_user(request):
     if user is not None:
         # If user is valid, call login method to login current user
         login(request, user)
-        data = {"username": username, "status": "Authenticated"}
+        data = {
+            "status": "Authenticated",
+            "username": username,
+        }
     return JsonResponse(data)
 
 
