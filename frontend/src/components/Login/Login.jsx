@@ -1,42 +1,22 @@
 import { useState } from "react";
-
 import "./Login.css";
 import "../assets/styles.css";
 import Header from "../Header/Header";
-import { getCSRF } from "../utils/auth";
+import { useAuth } from "../../hooks/AuthProvider";
 
 export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const auth = useAuth();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        let login_url = window.location.origin + "/myapp/login";
-
-        const { csrfToken } = await getCSRF();
-
-        const res = await fetch(login_url, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrfToken,
-            },
-            body: JSON.stringify({
-                "username": username,
-                "password": password
-            }),
-        });
-
-        const json = await res.json();
-        if (json.status != null && json.status === "Authenticated") {
-            sessionStorage.setItem('username', json.username);
-            window.location.href = "/";
+        if (username !== "" && password !== "") {
+            await auth.handleLogin(username, password);
+            return;
         }
-        else {
-            alert("User konnte nicht authentifiziert werden.");
-        }
+        alert("Bitte Benutzername und Passwort eingeben.");
     };
 
     return (

@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './SidebarMenu.css';
+import { useAuth } from '../../hooks/AuthProvider';
 
 export default function SidebarMenu() {
     const [isOpen, setIsOpen] = useState(false);
+
     const sidebarRef = useRef(null);
     const firstFocusableRef = useRef(null);
     const burgerButtonRef = useRef(null);
+
+    const auth = useAuth();
 
     const toggleSidebar = () => {
         setIsOpen((prev) => !prev);
@@ -60,30 +64,8 @@ export default function SidebarMenu() {
         }
     }, [isOpen]);
 
-    const isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
-
-    const currentUser = () => {
-        fetch('/myapp/current_user')
-            .then(response => response.json())
-            .then(data => {
-                if (data.username) {
-                    sessionStorage.setItem("username", data.username);
-                }
-            })
-            .catch(error => console.error('Error fetching current user:', error));
-    };
-
-    useEffect(() => {
-        currentUser();
-    }, []);
-
     const handleLogout = () => {
-        fetch('/myapp/logout', {
-            credentials: 'include',
-        });
-        currentUser();
-        sessionStorage.removeItem("username");
-        window.location.href = "/";
+        auth.handleLogout();
     };
 
     return (
@@ -108,20 +90,20 @@ export default function SidebarMenu() {
                 aria-hidden={!isOpen}
             >
                 <ul>
-                    {!isLoggedIn &&
+                    {!auth.user?.authenticated &&
                         <li><a href="/login">Login</a></li>
                     }
-                    {isLoggedIn &&
+                    {auth.user?.authenticated &&
                         <>
                             <li>
-                                Angemeldet als {sessionStorage.getItem("username")}
+                                Angemeldet als {auth.user?.username}
                             </li>
                             <li>
                                 <button onClick={handleLogout}>Logout</button>
                             </li>
                         </>
                     }
-                    {isLoggedIn &&
+                    {auth.user?.role == "admin" &&
                         <li><a href="/neues-rezept">Neues Rezept erstellen</a></li>
                     }
                     <li>
