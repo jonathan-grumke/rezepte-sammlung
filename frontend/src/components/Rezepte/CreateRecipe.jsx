@@ -2,10 +2,12 @@ import "../assets/styles.css";
 import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
 import Cookies from "js-cookie";
+import { useAuth } from '../../hooks/AuthProvider';
 
 export default function CreateRecipe() {
-    const handleCreate = async (formData) => {
+    const auth = useAuth();
 
+    const handleCreate = async (formData) => {
         const csrfToken = Cookies.get("csrftoken");
 
         try {
@@ -32,8 +34,6 @@ export default function CreateRecipe() {
         }
     }
 
-    let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
-
     return (
         <>
             <Header />
@@ -41,8 +41,8 @@ export default function CreateRecipe() {
                 <title>Neues Rezept</title>
                 <h1>Rezept erstellen</h1>
                 {/* Check if user is logged in */}
-                {!isLoggedIn && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
-                {isLoggedIn &&
+                {auth.user?.role != "admin" && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
+                {auth.user?.role == "admin" &&
                     <RecipeForm onSubmit={handleCreate} />
                 }
             </div>
