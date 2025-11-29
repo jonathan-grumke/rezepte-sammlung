@@ -91,12 +91,15 @@ export default function SidebarMenu() {
             >
                 <ul>
                     {!auth.user?.authenticated &&
-                        <li><a href="/login">Login</a></li>
+                        <>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/registrieren">Registrieren</a></li>
+                        </>
                     }
                     {auth.user?.authenticated &&
                         <>
                             <li>
-                                Angemeldet als {auth.user?.username}
+                                Hallo {auth.user?.firstname}!
                             </li>
                             <li>
                                 <button onClick={handleLogout}>Logout</button>
