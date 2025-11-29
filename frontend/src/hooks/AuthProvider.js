@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
         });
 
         const json = await res.json();
-        if (json.status != null && json.status === "Authenticated") {
+        if (json.status != null && json.status === "authenticated") {
             window.location.href = "/";
         }
         else {
@@ -35,6 +35,35 @@ const AuthProvider = ({ children }) => {
             credentials: 'include',
         });
         window.location.href = "/";
+    };
+
+    const handleRegister = async (username, password, firstname, lastname, email) => {
+        const { csrfToken } = await getCSRF();
+        const res = await fetch(window.location.origin + "/myapp/register", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken,
+            },
+            body: JSON.stringify({
+                "username": username,
+                "password": password,
+                "firstname": firstname,
+                "lastname": lastname,
+                "email": email,
+            }),
+        });
+        const json = await res.json();
+        if (json.status != null && json.status === "success") {
+            window.location.href = "/";
+        }
+        else if (json.status != null && json.status === "error") {
+            alert("Benutzername existiert bereits.");
+        }
+        else {
+            alert("Registrierung fehlgeschlagen.");
+        }
     };
 
     const fetchCurrentUser = () => {
@@ -53,7 +82,7 @@ const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
+        <AuthContext.Provider value={{ user, handleLogin, handleLogout, handleRegister }}>
             {children}
         </AuthContext.Provider>
     )
