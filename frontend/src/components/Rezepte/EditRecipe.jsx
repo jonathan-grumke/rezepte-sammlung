@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import RecipeForm from "./RecipeForm";
 import Cookies from "js-cookie";
+import { useAuth } from "../../hooks/AuthProvider";
 
 export default function EditRecipe() {
+    const auth = useAuth();
+
     // Extract recipe ID from URL
     const recipe_id = window.location.pathname.split("/").at(-2);
-    console.log(recipe_id);
-    console.log("Editing recipe with ID:", recipe_id);
 
     const [initialData, setInitialData] = useState(null);
 
@@ -66,15 +67,19 @@ export default function EditRecipe() {
         <>
             <Header />
             <div className="max-width-800">
+                <title>Rezept bearbeiten</title>
                 <h1>Rezept bearbeiten</h1>
-                {initialData ? (
-                    <>
-                        <RecipeForm initialData={initialData} onSubmit={handleUpdate} />
-                    </>
-                ) : (
-                    <p>Lade Rezeptdaten...</p>
-                )}
-            </div>
+                {/* Check if user is logged in */}
+                {auth.user?.role != "admin" && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
+                {auth.user?.role == "admin" &&
+                    (initialData ? (
+                        <>
+                            <RecipeForm initialData={initialData} onSubmit={handleUpdate} />
+                        </>
+                    ) : (
+                        <p>Lade Rezeptdaten...</p>
+                    ))}
+            </div >
         </>
     );
 }
