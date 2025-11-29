@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
 import Recipes from "./components/Rezepte/Recipes";
 import Recipe from "./components/Rezepte/Recipe";
 import CreateRecipe from "./components/Rezepte/CreateRecipe";
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Recipes />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registrieren" element={<Register />} />
         <Route path="/rezept/:id" element={<Recipe />} />
         <Route path="/neues-rezept" element={<CreateRecipe />} />
         <Route path="/rezept/:id/bearbeiten" element={<EditRecipe />} />

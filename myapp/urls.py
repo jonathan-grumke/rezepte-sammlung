@@ -6,6 +6,7 @@ urlpatterns = [
     path(route='login', view=views.login_user, name='login'),
     path(route='logout', view=views.logout_user, name='logout'),
     path(route='current_user', view=views.current_user, name='current_user'),
+    path(route='register', view=views.register_user, name='register_user'),
     
     path(route='recipes/', view=views.get_recipes, name='get_recipes'),
     path(route='recipes/<str:category>', view=views.get_recipes, name='get_recipes_by_category'),

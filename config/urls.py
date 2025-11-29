@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('myapp/', include('myapp.urls')),
     path('login/', TemplateView.as_view(template_name='index.html')),
+    path('registrieren/', TemplateView.as_view(template_name='index.html')),
     path('', TemplateView.as_view(template_name='index.html')),
     path('rezept/<int:rezept_id>', TemplateView.as_view(template_name='index.html')),
     path('neues-rezept/', TemplateView.as_view(template_name='index.html')),

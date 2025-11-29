@@ -4,7 +4,7 @@ import json
 import copy
 from django.contrib.auth import login, logout, authenticate
 from django.middleware.csrf import get_token
-from .models import Recipe;
+from .models import Recipe, User;
 
 
 def get_csrf(request):
@@ -23,7 +23,7 @@ def login_user(request):
         # If user is valid, call login method to login current user
         login(request, user)
         data = {
-            "status": "Authenticated",
+            "status": "authenticated",
             "username": username,
         }
     return JsonResponse(data)
@@ -53,6 +53,32 @@ def current_user(request):
         }
     return JsonResponse(data)
 
+
+def register_user(request):
+    data = json.loads(request.body)
+    username = data['username']
+    password = data['password']
+    firstname = data.get('firstname', '')
+    lastname = data.get('lastname', '')
+    email = data.get('email', '')
+    
+    username_exists = User.objects.filter(username=username).exists()
+    
+    if not username_exists:
+        user = User.objects.create_user(username=username, password=password, first_name=firstname, last_name=lastname, email=email, role='user')
+        login(request, user)
+        
+        return JsonResponse({
+            "message": "User registered successfully",
+            "status": "success",
+            "username": username,
+        })
+    else:
+        return JsonResponse({
+            "message": "Username already exists",
+            "status": "error",
+        })
+        
 
 def get_recipes(request, category="all"):
     if (category == "all"):
