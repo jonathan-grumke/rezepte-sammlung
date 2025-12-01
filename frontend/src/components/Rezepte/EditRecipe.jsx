@@ -70,8 +70,8 @@ export default function EditRecipe() {
                 <title>Rezept bearbeiten</title>
                 <h1>Rezept bearbeiten</h1>
                 {/* Check if user is logged in */}
-                {auth.user?.role != "admin" && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
-                {auth.user?.role == "admin" &&
+                {auth.user?.role !== "admin" && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
+                {auth.user?.role === "admin" &&
                     (initialData ? (
                         <>
                             <RecipeForm initialData={initialData} onSubmit={handleUpdate} />

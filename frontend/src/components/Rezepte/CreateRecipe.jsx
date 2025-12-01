@@ -41,8 +41,8 @@ export default function CreateRecipe() {
                 <title>Neues Rezept</title>
                 <h1>Rezept erstellen</h1>
                 {/* Check if user is logged in */}
-                {auth.user?.role != "admin" && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
-                {auth.user?.role == "admin" &&
+                {auth.user?.role !== "admin" && <p>Bitte einloggen, um ein Rezept zu erstellen.</p>}
+                {auth.user?.role === "admin" &&
                     <RecipeForm onSubmit={handleCreate} />
                 }
             </div>

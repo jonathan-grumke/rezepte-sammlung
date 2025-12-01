@@ -106,7 +106,7 @@ export default function SidebarMenu() {
                             </li>
                         </>
                     }
-                    {auth.user?.role == "admin" &&
+                    {auth.user?.role === "admin" &&
                         <li><a href="/neues-rezept">Neues Rezept erstellen</a></li>
                     }
                     <li>
