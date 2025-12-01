@@ -15,8 +15,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registrieren" element={<Register />} />
         <Route path="/rezept/:id" element={<Recipe />} />
-        <Route path="/neues-rezept" element={<CreateRecipe />} />
         <Route path="/rezept/:id/bearbeiten" element={<EditRecipe />} />
+        <Route path="/neues-rezept" element={<CreateRecipe />} />
       </Routes>
     </AuthProvider>
   );
