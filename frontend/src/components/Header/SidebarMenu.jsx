@@ -89,25 +89,36 @@ export default function SidebarMenu() {
                 className={`sidebar ${isOpen ? 'open' : ''}`}
                 aria-hidden={!isOpen}
             >
-                <ul>
+                {auth.user?.authenticated && (
+                    <p className="welcome-message">
+                        Hallo {auth.user?.firstname}!
+                    </p>
+                )}
+                <ul className="sidebar-links">
+                    <li>
+                        <a href="/">Startseite</a>
+                    </li>
                     {!auth.user?.authenticated &&
                         <>
-                            <li><a href="/login">Login</a></li>
-                            <li><a href="/registrieren">Registrieren</a></li>
-                        </>
-                    }
-                    {auth.user?.authenticated &&
-                        <>
                             <li>
-                                Hallo {auth.user?.firstname}!
+                                <a href="/login">Login</a>
                             </li>
                             <li>
-                                <button onClick={handleLogout}>Logout</button>
+                                <a href="/registrieren">Registrieren</a>
                             </li>
                         </>
                     }
                     {auth.user?.role === "admin" &&
-                        <li><a href="/neues-rezept">Neues Rezept erstellen</a></li>
+                        <li>
+                            <a href="/neues-rezept">Neues Rezept erstellen</a>
+                        </li>
+                    }
+                    {auth.user?.authenticated &&
+                        <>
+                            <li>
+                                <button onClick={handleLogout}>Logout</button>
+                            </li>
+                        </>
                     }
                     <li>
                         <button onClick={() => setIsOpen(false)}>Menü schließen</button>
