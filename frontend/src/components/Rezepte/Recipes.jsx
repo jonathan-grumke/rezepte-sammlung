@@ -9,8 +9,6 @@ import CategoryBar from "../Header/CategorySelector";
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const categories = [...CategoryDisplayMap.keys()];
-    const [selectedCategory, setSelectedCategory] = useState("all");
-
 
     const recipes_url = "/myapp/recipes";
 
@@ -24,7 +22,8 @@ export default function Recipes() {
         });
         const json = await res.json();
         const recipes = json.recipes;
-        setRecipes(recipes);
+        const publicRecipes = recipes.filter(recipe => recipe.published === true);
+        setRecipes(publicRecipes);
     }
 
     const filter_by_category = async (category) => {
@@ -43,7 +42,6 @@ export default function Recipes() {
     }
 
     const handleCategorySelect = (category) => {
-        setSelectedCategory(category);
         filter_by_category(category);
     };
 
