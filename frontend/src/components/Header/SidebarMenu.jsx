@@ -109,9 +109,14 @@ export default function SidebarMenu() {
                         </>
                     }
                     {auth.user?.role === "admin" &&
-                        <li>
-                            <a href="/neues-rezept">Neues Rezept erstellen</a>
-                        </li>
+                        <>
+                            <li>
+                                <a href="/neues-rezept">Neues Rezept erstellen</a>
+                            </li>
+                            <li>
+                                <a href="/nicht-veroeffentlichte-rezepte">Nicht veröffentlichte Rezepte</a>
+                            </li>
+                        </>
                     }
                     {auth.user?.authenticated &&
                         <>

@@ -5,6 +5,7 @@ import Recipes from "./components/Recipes/Recipes";
 import Recipe from "./components/Recipes/Recipe";
 import CreateRecipe from "./components/Recipes/CreateRecipe";
 import EditRecipe from "./components/Recipes/EditRecipe";
+import NonPublicRecipes from "./components/Recipes/NonPublicRecipes";
 import AuthProvider from "./hooks/AuthProvider";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/rezept/:id" element={<Recipe />} />
         <Route path="/rezept/:id/bearbeiten" element={<EditRecipe />} />
         <Route path="/neues-rezept" element={<CreateRecipe />} />
+        <Route path="/nicht-veroeffentlichte-rezepte" element={<NonPublicRecipes />} />
       </Routes>
     </AuthProvider>
   );
