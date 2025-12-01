@@ -61,6 +61,11 @@ export default function Login() {
                             Login
                         </button>
                     </form>
+                    <hr />
+                    <div className="">
+                        <p>Noch keinen Account?</p>
+                        <a href="/registrieren" className="">Registrieren</a>
+                    </div>
                 </div>
             </div>
         </>

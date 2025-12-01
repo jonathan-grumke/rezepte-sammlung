@@ -97,6 +97,11 @@ export default function Register() {
                         </div>
                         <button type="submit">Registrieren</button>
                     </form>
+                    <hr />
+                    <div className="">
+                        <p>Bereits registriert?</p>
+                        <a href="/login" className="">zum Login</a>
+                    </div>
                 </div>
             </div>
         </>
