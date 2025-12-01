@@ -17,19 +17,6 @@ export default function Recipe() {
     const recipe_id = window.location.pathname.split("/").pop();
     console.log(recipe_id);
 
-    const get_recipe = async (id) => {
-        const res = await fetch(`/myapp/recipe/${id}`, {
-            method: "GET",
-        });
-        const json = await res.json();
-        setRecipe(json);
-        setIngredients(json.ingredients);
-        setServings(json.servings);
-        console.log("Fetched recipe:", json);
-        console.log("Servings set to:", json.servings);
-        console.log("servings state:", servings);
-    }
-
     const delete_recipe = async (id) => {
 
         const csrfToken = Cookies.get("csrftoken");
@@ -55,6 +42,15 @@ export default function Recipe() {
     }
 
     useEffect(() => {
+        const get_recipe = async (id) => {
+            const res = await fetch(`/myapp/recipe/${id}`, {
+                method: "GET",
+            });
+            const json = await res.json();
+            setRecipe(json);
+            setIngredients(json.ingredients);
+            setServings(json.servings);
+        }
         get_recipe(recipe_id);
     }, [recipe_id]);
 
