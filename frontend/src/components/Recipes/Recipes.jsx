@@ -10,14 +10,14 @@ export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const categories = [...CategoryDisplayMap.keys()];
 
-    const recipes_url = "/myapp/recipes";
+    const recipesUrl = "/myapp/recipes";
 
-    const recipes_url_category = (category) => {
-        return `${recipes_url}/${category}`;
+    const recipesCategoryUrl = (category) => {
+        return `${recipesUrl}/${category}`;
     }
 
-    const get_recipes = async () => {
-        const res = await fetch(recipes_url, {
+    const getRecipes = async () => {
+        const res = await fetch(recipesUrl, {
             method: "GET",
         });
         const json = await res.json();
@@ -26,13 +26,13 @@ export default function Recipes() {
         setRecipes(publicRecipes);
     }
 
-    const filter_by_category = async (category) => {
+    const filterByCategory = async (category) => {
         let url;
         if (category === "all") {
-            url = recipes_url;
+            url = recipesUrl;
         }
         else {
-            url = recipes_url_category(category);
+            url = recipesCategoryUrl(category);
         }
         const res = await fetch(url, {
             method: "GET",
@@ -42,11 +42,11 @@ export default function Recipes() {
     }
 
     const handleCategorySelect = (category) => {
-        filter_by_category(category);
+        filterByCategory(category);
     };
 
     useEffect(() => {
-        get_recipes();
+        getRecipes();
     }, []);
 
     return (

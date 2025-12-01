@@ -14,10 +14,10 @@ export default function Recipe() {
     const auth = useAuth();
 
     // Extract recipe ID from URL
-    const recipe_id = window.location.pathname.split("/").pop();
-    console.log(recipe_id);
+    const recipeId = window.location.pathname.split("/").pop();
+    console.log(recipeId);
 
-    const delete_recipe = async (id) => {
+    const deleteRecipe = async (id) => {
 
         const csrfToken = Cookies.get("csrftoken");
 
@@ -42,7 +42,7 @@ export default function Recipe() {
     }
 
     useEffect(() => {
-        const get_recipe = async (id) => {
+        const getRecipe = async (id) => {
             const res = await fetch(`/myapp/recipe/${id}`, {
                 method: "GET",
             });
@@ -51,8 +51,8 @@ export default function Recipe() {
             setIngredients(json.ingredients);
             setServings(json.servings);
         }
-        get_recipe(recipe_id);
-    }, [recipe_id]);
+        getRecipe(recipeId);
+    }, [recipeId]);
 
     return (
         <>
@@ -97,7 +97,7 @@ export default function Recipe() {
                         </div>
                         {auth.user?.role === "admin" &&
                             <>
-                                <button onClick={() => delete_recipe(recipe.id)} className="delete-button">Rezept löschen</button>
+                                <button onClick={() => deleteRecipe(recipe.id)} className="delete-button">Rezept löschen</button>
                                 <a href={"/rezept/" + recipe.id + "/bearbeiten"} className="edit-button">Rezept bearbeiten</a>
                             </>
                         }

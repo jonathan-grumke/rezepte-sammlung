@@ -9,7 +9,7 @@ export default function EditRecipe() {
     const auth = useAuth();
 
     // Extract recipe ID from URL
-    const recipe_id = window.location.pathname.split("/").at(-2);
+    const recipeId = window.location.pathname.split("/").at(-2);
 
     const [initialData, setInitialData] = useState(null);
 
@@ -34,7 +34,7 @@ export default function EditRecipe() {
         const csrfToken = Cookies.get("csrftoken");
 
         try {
-            const res = await fetch(`/myapp/recipe/${recipe_id}/update`, {
+            const res = await fetch(`/myapp/recipe/${recipeId}/update`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -50,7 +50,7 @@ export default function EditRecipe() {
             const updatedRecipe = await res.json();
             console.log("Recipe updated successfully:", updatedRecipe);
             alert("Rezept erfolgreich aktualisiert!");
-            window.location.href = `/rezept/${recipe_id}`;
+            window.location.href = `/rezept/${recipeId}`;
         }
         catch (error) {
             console.error("Error:", error);
@@ -58,10 +58,10 @@ export default function EditRecipe() {
     };
 
     useEffect(() => {
-        if (recipe_id) {
-            fetchRecipe(recipe_id);
+        if (recipeId) {
+            fetchRecipe(recipeId);
         }
-    }, [recipe_id]);
+    }, [recipeId]);
 
     return (
         <>
