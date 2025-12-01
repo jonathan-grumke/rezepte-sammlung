@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
-import Recipes from "./components/Rezepte/Recipes";
-import Recipe from "./components/Rezepte/Recipe";
-import CreateRecipe from "./components/Rezepte/CreateRecipe";
-import EditRecipe from "./components/Rezepte/EditRecipe";
+import Recipes from "./components/Recipes/Recipes";
+import Recipe from "./components/Recipes/Recipe";
+import CreateRecipe from "./components/Recipes/CreateRecipe";
+import EditRecipe from "./components/Recipes/EditRecipe";
 import AuthProvider from "./hooks/AuthProvider";
 
 function App() {
