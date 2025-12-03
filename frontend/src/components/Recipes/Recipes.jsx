@@ -38,7 +38,8 @@ export default function Recipes() {
             method: "GET",
         });
         const json = await res.json();
-        setRecipes(json.recipes);
+        const publicRecipes = json.recipes.filter(recipe => recipe.published === true);
+        setRecipes(publicRecipes);
     }
 
     const handleCategorySelect = (category) => {
