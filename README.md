@@ -8,16 +8,22 @@ App deployed on render.com and available at https://moniques-rezepte.onrender.co
 
 A Postgres database for storing recipes and users is also hosted on render.com.
 
-Image is built with
+Build the image with
 
 ```
-docker build -t ghcr.io/jonathan-grumke/app-image .
+docker build -t ghcr.io/<username>/<app-image> .
 ```
 
-and pushed to GitHub container registry with
+and push to the GitHub container registry with
 
 ```
-docker push ghcr.io/jonathan-grumke/app-image
+docker push ghcr.io/<username>/<app-image>
+```
+
+Use the following line to login to the Github container registry. Replace `<username>` with GitHub username and `<token>` with a personal access token from GitHub.
+
+```
+docker login ghcr.io --username <username> --password <token>
 ```
 
 When working on apple-silicon and deploying on render.com you need to set the environment variable DOCKER_DEFAULT_PLATFORM before building the image:
