@@ -95,7 +95,7 @@ export default function Recipe() {
                             className="instructions-container"
                             dangerouslySetInnerHTML={{ __html: recipe.instructions }} >
                         </div>
-                        {auth.user?.role === "admin" &&
+                        {(auth.user?.role === "admin" || auth.user?.role === "editor") &&
                             <>
                                 <button onClick={() => deleteRecipe(recipe.id)} className="delete-button">Rezept löschen</button>
                                 <a href={"/rezept/" + recipe.id + "/bearbeiten"} className="edit-button">Rezept bearbeiten</a>

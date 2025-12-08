@@ -30,7 +30,7 @@ export default function NonPublicRecipes() {
             <Header />
             <title>Nicht veröffentlichte Rezepte</title>
             <div className="max-width-800 recipes-container">
-                {auth.user?.role === "admin" ?
+                {(auth.user?.role === "admin" || auth.user?.role === "editor") ?
                     <>
                         <h1>Nicht veröffentlichte Rezepte</h1>
                         <ul className="recipe-list">
