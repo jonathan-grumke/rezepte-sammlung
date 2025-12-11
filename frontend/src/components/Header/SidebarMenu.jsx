@@ -114,12 +114,15 @@ export default function SidebarMenu() {
                                 <a href="/neues-rezept">Neues Rezept erstellen</a>
                             </li>
                             <li>
-                                <a href="/nicht-veroeffentlichte-rezepte">Nicht veröffentlichte Rezepte</a>
+                                <a href="/nicht-veroeffentlichte-rezepte">Unveröffentlichte Rezepte</a>
                             </li>
                         </>
                     }
                     {auth.user?.authenticated &&
                         <>
+                            <li>
+                                <a href="/gespeicherte-rezepte">Gespeicherte Rezepte</a>
+                            </li>
                             <li>
                                 <button onClick={handleLogout}>Logout</button>
                             </li>
