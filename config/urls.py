@@ -29,5 +29,6 @@ urlpatterns = [
     path('rezept/<int:rezept_id>/bearbeiten', TemplateView.as_view(template_name='index.html')),
     path('neues-rezept/', TemplateView.as_view(template_name='index.html')),
     path('nicht-veroeffentlichte-rezepte/', TemplateView.as_view(template_name='index.html')),
+    path('gespeicherte-rezepte/', TemplateView.as_view(template_name='index.html')),
     path('myapp/', include('myapp.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
