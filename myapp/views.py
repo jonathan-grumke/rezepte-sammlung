@@ -151,3 +151,39 @@ def update_recipe(request, id):
         except Recipe.DoesNotExist:
             return JsonResponse({"error": "Recipe not found"}, status=404)
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+def save_recipe(request, id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return JsonResponse({"error": "Authentication required"}, status=401)
+        try:
+            recipe = Recipe.objects.get(id=id)
+            user.saved_recipes.add(recipe)
+            return JsonResponse({"message": "Recipe saved successfully"}, status=200)
+        except Recipe.DoesNotExist:
+            return JsonResponse({"error": "Recipe not found"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+def unsave_recipe(request, id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return JsonResponse({"error": "Authentication required"}, status=401)
+        try:
+            recipe = Recipe.objects.get(id=id)
+            user.saved_recipes.remove(recipe)
+            return JsonResponse({"message": "Recipe unsaved successfully"}, status=200)
+        except Recipe.DoesNotExist:
+            return JsonResponse({"error": "Recipe not found"}, status=404)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+def get_saved_recipes(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({"error": "Authentication required"}, status=401)
+    saved_recipes = user.saved_recipes.values()
+    return JsonResponse({'saved_recipes': list(saved_recipes)}, safe=False)

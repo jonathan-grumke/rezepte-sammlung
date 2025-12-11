@@ -16,4 +16,8 @@ urlpatterns = [
     path(route='recipe/<int:id>/delete', view=views.delete_recipe, name='delete_recipe'),
     
     path(route='recipe/create', view=views.create_recipe, name='create_recipe'),
+    
+    path(route='recipe/<int:id>/save', view=views.save_recipe, name='save_recipe'),
+    path(route='recipe/<int:id>/unsave', view=views.unsave_recipe, name='unsave_recipe'),
+    path(route='user/saved_recipes', view=views.get_saved_recipes, name='get_saved_recipes'),
 ]
