@@ -2,17 +2,15 @@ import "./Recipes.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
-import RecipeCard from "./RecipeCard";
 import { useAuth } from "../../hooks/AuthProvider";
+import RecipesList from "./RecipesList";
 
 export default function NonPublicRecipes() {
     const [recipes, setRecipes] = useState([]);
     const auth = useAuth();
 
-    const recipesUrl = "/myapp/recipes";
-
-    const getRecipes = async () => {
-        const res = await fetch(recipesUrl, {
+    const getUnpublishedRecipes = async () => {
+        const res = await fetch("/myapp/recipes", {
             method: "GET",
         });
         const json = await res.json();
@@ -22,28 +20,20 @@ export default function NonPublicRecipes() {
     }
 
     useEffect(() => {
-        getRecipes();
+        getUnpublishedRecipes();
     }, []);
 
     return (
         <>
             <Header />
-            <title>Nicht veröffentlichte Rezepte</title>
-            <div className="max-width-800 recipes-container">
-                {(auth.user?.role === "admin" || auth.user?.role === "editor") ?
-                    <>
-                        <h1>Nicht veröffentlichte Rezepte</h1>
-                        <ul className="recipe-list">
-                            {recipes.map((recipe) => (
-                                <li key={recipe.id}>
-                                    <RecipeCard recipe={recipe} />
-                                </li>
-                            ))}
-                        </ul>
-                    </>
-                    : <p>Sie haben keine Berechtigung, diese Seite zu sehen.</p>
-                }
+            <title>Unveröffentlichte Rezepte</title>
+            <div className="max-width-800">
+                <h1>Unveröffentlichte Rezepte</h1>
             </div>
+            {(auth.user?.role === "admin" || auth.user?.role === "editor") ?
+                <RecipesList recipes={recipes} />
+                : <p className="max-width-800">Sie haben keine Berechtigung, diese Seite zu sehen.</p>
+            }
         </>
     )
 
