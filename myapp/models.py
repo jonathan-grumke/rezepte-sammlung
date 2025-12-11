@@ -42,6 +42,8 @@ class User(AbstractUser):
     
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='user')
     
+    saved_recipes = models.ManyToManyField(Recipe, blank=True, related_name='saved_by_users')
+    
     def is_admin(self):
         return self.role == 'admin'
     
