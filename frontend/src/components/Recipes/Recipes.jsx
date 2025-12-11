@@ -2,7 +2,7 @@ import "./Recipes.css";
 import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
-import RecipesList from "./RecipesList";
+import RecipeList from "./RecipeList";
 
 export default function Recipes() {
     const [recipes, setRecipes] = useState(null);
@@ -25,7 +25,7 @@ export default function Recipes() {
         <>
             <Header />
             <title>Rezepte</title>
-            {recipes && <RecipesList recipes={recipes} />}
+            {recipes && <RecipeList recipes={recipes} />}
         </>
     )
 

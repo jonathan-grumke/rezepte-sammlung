@@ -5,7 +5,7 @@ import CategoryBar from "../Header/CategorySelector";
 import "../assets/styles.css";
 import "./Recipes.css";
 
-export default function RecipesList({ recipes }) {
+export default function RecipeList({ recipes }) {
     const [filteredRecipes, setFilteredRecipes] = useState(recipes);
     const categories = [...CategoryDisplayMap.keys()];
 

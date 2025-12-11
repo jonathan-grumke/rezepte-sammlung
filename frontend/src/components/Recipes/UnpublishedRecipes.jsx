@@ -3,7 +3,7 @@ import "../assets/styles.css";
 import { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import { useAuth } from "../../hooks/AuthProvider";
-import RecipesList from "./RecipesList";
+import RecipeList from "./RecipeList";
 
 export default function UnpublishedRecipes() {
     const [recipes, setRecipes] = useState([]);
@@ -31,7 +31,7 @@ export default function UnpublishedRecipes() {
                 <h1>Unveröffentlichte Rezepte</h1>
             </div>
             {(auth.user?.role === "admin" || auth.user?.role === "editor") ?
-                <RecipesList recipes={recipes} />
+                <RecipeList recipes={recipes} />
                 : <p className="max-width-800">Sie haben keine Berechtigung, diese Seite zu sehen.</p>
             }
         </>

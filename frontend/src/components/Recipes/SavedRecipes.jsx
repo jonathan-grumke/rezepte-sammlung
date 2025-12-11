@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../Header/Header"
-import RecipesList from "./RecipesList"
+import RecipeList from "./RecipeList"
 import { useAuth } from '../../hooks/AuthProvider';
 
 export default function SavedRecipes() {
@@ -30,7 +30,7 @@ export default function SavedRecipes() {
                 <h1>Gespeicherte Rezepte</h1>
             </div>
             {savedRecipes.length > 0 ? (auth.user?.authenticated ? (
-                <RecipesList recipes={savedRecipes} />
+                <RecipeList recipes={savedRecipes} />
             ) : (
                 <p>Bitte einloggen, um gespeicherte Rezept zu sehen.</p>
             )) : (
