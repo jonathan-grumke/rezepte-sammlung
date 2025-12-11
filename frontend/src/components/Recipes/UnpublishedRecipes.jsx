@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 import { useAuth } from "../../hooks/AuthProvider";
 import RecipesList from "./RecipesList";
 
-export default function NonPublicRecipes() {
+export default function UnpublishedRecipes() {
     const [recipes, setRecipes] = useState([]);
     const auth = useAuth();
 
@@ -15,8 +15,8 @@ export default function NonPublicRecipes() {
         });
         const json = await res.json();
         const recipes = json.recipes;
-        const nonPublicRecipes = recipes.filter(recipe => recipe.published === false);
-        setRecipes(nonPublicRecipes);
+        const unpublishedRecipes = recipes.filter(recipe => recipe.published === false);
+        setRecipes(unpublishedRecipes);
     }
 
     useEffect(() => {
