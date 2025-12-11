@@ -41,6 +41,30 @@ export default function Recipe() {
         }
     }
 
+    const saveRecipe = async (id) => {
+        const csrfToken = Cookies.get("csrftoken");
+
+        const res = await fetch(`/myapp/recipe/${id}/save`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "X-CSRFToken": csrfToken,
+            },
+        })
+    }
+
+    const unsaveRecipe = async (id) => {
+        const csrfToken = Cookies.get("csrftoken");
+
+        const res = await fetch(`/myapp/recipe/${id}/unsave`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "X-CSRFToken": csrfToken,
+            },
+        })
+    }
+
     useEffect(() => {
         const getRecipe = async (id) => {
             const res = await fetch(`/myapp/recipe/${id}`, {
@@ -63,6 +87,8 @@ export default function Recipe() {
                     <div>
                         <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={400} />
                         <h1>{recipe.title}</h1>
+                        <button className="save-recipe-button" onClick={() => saveRecipe(recipe.id)}>Rezept speichern</button>
+                        <button className="save-recipe-button" onClick={() => unsaveRecipe(recipe.id)}>Rezept nicht mehr speichern</button>
                         <div className="recipe-card-tags">
                             <span className="recipe-card-category">{recipe.category && CategoryDisplayMap.get(recipe.category).single}</span>
                             <span className="recipe-card-time">{recipe.time} Min.</span>
