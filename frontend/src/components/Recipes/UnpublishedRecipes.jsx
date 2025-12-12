@@ -31,8 +31,9 @@ export default function UnpublishedRecipes() {
                 <h1>Unveröffentlichte Rezepte</h1>
             </div>
             {(auth.user?.role === "admin" || auth.user?.role === "editor") ?
-                <RecipeList recipes={recipes} />
-                : <p className="max-width-800">Sie haben keine Berechtigung, diese Seite zu sehen.</p>
+                (recipes && <RecipeList recipes={recipes} />)
+                :
+                <p className="max-width-800">Sie haben keine Berechtigung, diese Seite zu sehen.</p>
             }
         </>
     )
