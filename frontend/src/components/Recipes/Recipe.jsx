@@ -10,6 +10,7 @@ export default function Recipe() {
     const [recipe, setRecipe] = useState({});
     const [ingredients, setIngredients] = useState([]);
     const [servings, setServings] = useState();
+    const [savedByUser, setSavedByUser] = useState(false);
 
     const auth = useAuth();
 
@@ -18,7 +19,6 @@ export default function Recipe() {
     console.log(recipeId);
 
     const deleteRecipe = async (id) => {
-
         const csrfToken = Cookies.get("csrftoken");
 
         if (window.confirm("Möchten Sie dieses Rezept wirklich löschen?")) {
@@ -43,27 +43,38 @@ export default function Recipe() {
 
     const saveRecipe = async (id) => {
         const csrfToken = Cookies.get("csrftoken");
-
         const res = await fetch(`/myapp/recipe/${id}/save`, {
             method: "POST",
             credentials: "include",
             headers: {
                 "X-CSRFToken": csrfToken,
             },
-        })
+        });
+        if (res.ok) {
+            setSavedByUser(true);
+        }
     }
 
     const unsaveRecipe = async (id) => {
         const csrfToken = Cookies.get("csrftoken");
-
         const res = await fetch(`/myapp/recipe/${id}/unsave`, {
             method: "POST",
             credentials: "include",
             headers: {
                 "X-CSRFToken": csrfToken,
             },
-        })
+        });
+        if (res.ok) {
+            setSavedByUser(false);
+        }
     }
+
+    const isRecipeSavedByUser = () => {
+        if (auth.user?.authenticated && auth.user?.saved_recipes.some(r => r.id === recipe.id)) {
+            setSavedByUser(true);
+            console.log("Recipe is saved by user");
+        }
+    };
 
     useEffect(() => {
         const getRecipe = async (id) => {
@@ -78,6 +89,10 @@ export default function Recipe() {
         getRecipe(recipeId);
     }, [recipeId]);
 
+    useEffect(() => {
+        isRecipeSavedByUser();
+    }, [auth.user]);
+
     return (
         <>
             <Header />
@@ -87,12 +102,22 @@ export default function Recipe() {
                     <div>
                         <img src={`/media/${recipe.image}`} alt={recipe.title} className="recipe-image" width={400} />
                         <h1>{recipe.title}</h1>
-                        <button className="save-recipe-button" onClick={() => saveRecipe(recipe.id)}>Rezept speichern</button>
-                        <button className="save-recipe-button" onClick={() => unsaveRecipe(recipe.id)}>Rezept nicht mehr speichern</button>
                         <div className="recipe-card-tags">
-                            <span className="recipe-card-category">{recipe.category && CategoryDisplayMap.get(recipe.category).single}</span>
-                            <span className="recipe-card-time">{recipe.time} Min.</span>
+                            <span className="recipe-card-tag">{recipe.category && CategoryDisplayMap.get(recipe.category).single}</span>
+                            <span className="recipe-card-tag">{recipe.time} Min.</span>
+                            {auth.user &&
+                                (auth.user.authenticated && savedByUser) &&
+                                <span className="recipe-card-tag">Gespeichert</span>
+                            }
                         </div>
+                        {auth.user &&
+                            (auth.user.authenticated && (
+                                savedByUser ?
+                                    <button className="save-recipe-button" onClick={() => unsaveRecipe(recipe.id)}>Rezept nicht mehr speichern</button>
+                                    :
+                                    <button className="save-recipe-button" onClick={() => saveRecipe(recipe.id)}>Rezept speichern</button>
+                            ))
+                        }
                         <h2>Zutaten</h2>
                         <label>Portionen:
                             <input
