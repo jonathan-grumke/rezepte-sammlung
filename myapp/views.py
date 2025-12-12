@@ -45,6 +45,7 @@ def current_user(request):
             "username": user.username,
             "firstname": user.first_name,
             "role": user.role,
+            "saved_recipes": list(user.saved_recipes.values("id")),
         }
     else:
         data = {
@@ -82,9 +83,9 @@ def register_user(request):
 
 def get_recipes(request, category="all"):
     if (category == "all"):
-        recipes = Recipe.objects.values("id", "title", "category", "ingredients", "instructions", "servings", "image", "time", "published")
+        recipes = Recipe.objects.values()
     else:
-        recipes = Recipe.objects.filter(category=category).values("id", "title", "category", "ingredients", "instructions", "servings", "image", "time", "published")
+        recipes = Recipe.objects.filter(category=category).values()
     return JsonResponse({'recipes': list(recipes)}, safe=False)
 
 
