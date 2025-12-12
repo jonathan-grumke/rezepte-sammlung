@@ -72,7 +72,6 @@ export default function Recipe() {
     const isRecipeSavedByUser = () => {
         if (auth.user?.authenticated && auth.user?.saved_recipes.some(r => r.id === recipe.id)) {
             setSavedByUser(true);
-            console.log("Recipe is saved by user");
         }
     };
 
